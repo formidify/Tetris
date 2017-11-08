@@ -20,7 +20,7 @@ public class BoardDisplay {
     }
 
     private boolean isChanged(){
-
+        return true;
     }
 
     private void updateNewSquares(){
@@ -31,7 +31,7 @@ public class BoardDisplay {
 
     }
 
-    private displayBlocks(){
+    private void displayBlocks(){
 
     }
 
@@ -40,6 +40,14 @@ public class BoardDisplay {
     }
 
     public void endDisplay(){
+
+    }
+
+    BoardDisplay(){
+
+    }
+
+    public void undrawTetrimino(Tetrimino tetrimino) {
 
     }
 }
