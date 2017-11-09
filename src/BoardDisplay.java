@@ -28,7 +28,7 @@ import javafx.scene.layout.*;
 
 import static javafx.scene.paint.Color.*;
 
-public class BoardDisplay extends Application {
+public class BoardDisplay {
     Board gameBoard;
     Group root;
     Rectangle[][] grid;
@@ -39,8 +39,8 @@ public class BoardDisplay extends Application {
         root = new Group();
         grid = new Rectangle[24][12];
    }
-    @Override
-    public void start(Stage primaryStage) {
+
+    public void mainScene(Stage primaryStage) {
         //BorderPane root = new BorderPane();
 
 //        gameGrid = new Group();
@@ -60,11 +60,8 @@ public class BoardDisplay extends Application {
         clearLine(23);
         moveRow(23);
         Scene scene = new Scene(root, 300, 600);
-        primaryStage.setTitle("Simple Tetris GUI");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
     }
 
     //Waiting on tetrimino class. But once we have 100% go on that, tetrimino will be a parameter
@@ -152,7 +149,5 @@ public class BoardDisplay extends Application {
 
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 }

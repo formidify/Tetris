@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,12 +22,17 @@ import javafx.stage.Stage;
  */
 
 
-public class StartGame extends Application {
+public class StartGame {
     public static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("TETRIS");
 
-    @Override
-    public void start(Stage primaryStage) {
+    private Controller controller;
+    private Stage primary;
+
+    void startScene(Stage primaryStage, Controller control) {
+        controller = control;
+        primary = primaryStage;
+
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
         Node directionsPane = addText(directions, FontWeight.BOLD, 60);
@@ -33,8 +40,8 @@ public class StartGame extends Application {
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
 
-        Scene scene = new Scene(root, 350, 450);
-        primaryStage.setTitle("New Game - Tetris");
+        Scene scene = new Scene(root, 300, 600);
+        primaryStage.setTitle("Tetris");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -57,6 +64,14 @@ public class StartGame extends Application {
         buttonPane.add(play, 0, 0, 2,2);
         buttonPane.add(settings, 0, 2);
         buttonPane.add(help, 1, 2);
+
+        // Handle event of the buttons
+        play.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.startRound();
+            }
+        });
 
         // create icon for play button, set its size, add popup tooltip
         play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -94,10 +109,6 @@ public class StartGame extends Application {
         text.setFont(Font.font("Chalkduster", fontWeight, fontSize));
         flowPane.getChildren().add(text);
         return flowPane;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
