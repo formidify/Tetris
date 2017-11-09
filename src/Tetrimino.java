@@ -62,7 +62,7 @@ public class Tetrimino {
         updatePostion();
     }
 
-    int[][] getPosition(){
+    public int[][] getPosition(){
         return position;
     }
 
@@ -75,7 +75,7 @@ public class Tetrimino {
         // Tell view
     }
 
-    void translate(int[] deltaXY){
+    public void translate(int[] deltaXY){
         updateCenter(deltaXY);
     }
 
@@ -84,7 +84,7 @@ public class Tetrimino {
         setCenter(newCenter);
     }
 
-    boolean land() {
+    public boolean land() {
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
