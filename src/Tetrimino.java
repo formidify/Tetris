@@ -100,7 +100,6 @@ public class Tetrimino {
     }
 
     public void fall() {
-        // TODO: to be fixed after the timer is added in
         translate(new int[] {1,0});
     }
 

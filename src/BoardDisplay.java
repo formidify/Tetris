@@ -89,17 +89,8 @@ public class BoardDisplay {
             grid[row][col].setFill(BLUE);
             grid[row][col].setStroke(BLACK);
             root.getChildren().add(grid[row][col]);
-            //fallSquare(grid[row][col]);
         }
     }
-
-//    void fallSquare(Rectangle square){
-//        TranslateTransition translateTransition = new TranslateTransition();
-//        translateTransition.setDuration(Duration.millis(10));
-//        translateTransition.setNode(square);
-//        translateTransition.setByY(25);
-//        translateTransition.play();
-//    }
 
     public void clearLine(int row){
         for (int col =0; col <grid[0].length; col ++){
@@ -166,12 +157,8 @@ public class BoardDisplay {
         for (int i=0; i < 4; i++){
             int row = position[i][0];
             int col = position[i][1];
-            int x = 25* col;
-            int y = 25* row;
-            grid[row][col] = new Rectangle(x, y, 25, 25);
-            grid[row][col].setFill(BLUE);
-            grid[row][col].setStroke(BLACK);
             root.getChildren().remove(grid[row][col]);
+            grid[row][col] = null;
         }
     }
 

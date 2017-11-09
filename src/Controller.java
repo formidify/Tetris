@@ -36,7 +36,6 @@ public class Controller {
             Tetrimino tetrimino = new Tetrimino(board);
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
-                        int i = 0;
                         @Override
                         public void run() {
                             Platform.runLater(new Runnable(){
@@ -53,7 +52,7 @@ public class Controller {
                         }
                     },
                     0,
-                    1000
+                    (long) (1000/tetrimino.speed)
             );
             board.putTetrimino(tetrimino);
             mainView.undrawTetrimino(tetrimino);
