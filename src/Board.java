@@ -7,9 +7,12 @@ public class Board {
     public static final int NUMROW = 20;
 
     Square[][] board;
+    BoardDisplay boardView;
 
-    Board(){
+
+    Board(BoardDisplay boardDisplay){
          board = new Square[NUMCOLUMN][NUMROW];
+         boardView = boardDisplay;
     }
 
     void putTetrimino(Tetrimino tetrimino) {
@@ -19,6 +22,7 @@ public class Board {
             square.color = tetrimino.getColor();
             square.isEmpty = false;
         }
+        boardView.updateBoardView(board);
     }
 
     boolean rowIsFull(int row){
@@ -50,7 +54,7 @@ public class Board {
         return false;
     }
 
-    private class Square{
+    public class Square{
 
         boolean isEmpty;
         double[] color;

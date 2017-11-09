@@ -1,8 +1,8 @@
 public class Controller {
     BoardDisplay boardDisplay = new BoardDisplay();
-    Board board = new Board();
+    Board board = new Board(boardDisplay);
 
-    public void undrawTetrimino(Board board, Tetrimino tetrimino){
+    public void landTetrimino(Board board, Tetrimino tetrimino){
         if (tetrimino.land()){
             board.putTetrimino(tetrimino);
             boardDisplay.undrawTetrimino(tetrimino);

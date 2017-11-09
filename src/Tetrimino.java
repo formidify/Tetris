@@ -1,7 +1,7 @@
 public class Tetrimino {
 
-    static String[] shapes = {"Straight", "Square", "L", "J", "Z", "S", "T"};
-    static int[] orientations = {0,1,2,3};
+    private static String[] shapes = {"Straight", "Square", "L", "J", "Z", "S", "T"};
+    private static int[] orientations = {0,1,2,3};
 
     String shape;
     int orientation;
@@ -9,14 +9,21 @@ public class Tetrimino {
     private int[][] position;
     double speed;
     private double[] color;
+    Board mainBoard;
+    BoardDisplay boardView;
+    boolean landing; // vs falling
 
-    Tetrimino(){
+    Tetrimino(Board board){
         speed = 1;
         shape = shapes[0];
         orientation = orientations[0];
         center = new int[] {5,0};
         position = getPosition();
         color = new double[] {0,0,0,0};
+        mainBoard = board;
+        boardView = board.boardView;
+        landing = false;
+
     }
 
     private int[][] getRelativePosition() {
@@ -46,7 +53,7 @@ public class Tetrimino {
         return relativePosition;
     }
 
-    public int[] getCenter(){
+    int[] getCenter(){
         return center;
     }
 
@@ -55,7 +62,7 @@ public class Tetrimino {
         updatePostion();
     }
 
-    public int[][] getPosition(){
+    int[][] getPosition(){
         return position;
     }
 
@@ -65,10 +72,10 @@ public class Tetrimino {
             int[] relPos = relativePosition[i];
             position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
         }
-        // Tell controller
+        // Tell view
     }
 
-    public void translate(int[] deltaXY){
+    void translate(int[] deltaXY){
         updateCenter(deltaXY);
     }
 
@@ -78,11 +85,22 @@ public class Tetrimino {
     }
 
     boolean land() {
-        // Tell controller
-        return true;
+        for (int[] aPosition : position) {
+            int row = aPosition[0];
+            int col = aPosition[1];
+            if (row == mainBoard.NUMROW - 1 || !mainBoard.board[row + 1][col].isEmpty) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public double[] getColor() {
+    public void fall() {
+        // TODO: to be fixed after the timer is added in
+        translate(new int[] {0, (int) speed});
+    }
+
+    double[] getColor() {
         return color;
     }
 }

@@ -50,4 +50,8 @@ public class BoardDisplay {
     public void undrawTetrimino(Tetrimino tetrimino) {
 
     }
+
+    public void updateBoardView(Board.Square[][] board) {
+
+    }
 }
