@@ -11,7 +11,12 @@ public class Board {
 
 
     Board(BoardDisplay boardDisplay){
-         board = new Square[NUMCOLUMN][NUMROW];
+         board = new Square[NUMROW][NUMCOLUMN];
+         for (int i = 0; i < NUMROW; i++){
+             for (int j = 0; j < NUMCOLUMN; j++){
+                 board[i][j] = new Square();
+             }
+         }
          boardView = boardDisplay;
     }
 
@@ -44,7 +49,7 @@ public class Board {
         return fullRows;
     }
 
-    public boolean reachBoardTop() {
+    boolean reachBoardTop() {
         // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
             if (! board[0][col].isEmpty){
@@ -54,7 +59,7 @@ public class Board {
         return false;
     }
 
-    public class Square{
+    class Square{
 
         boolean isEmpty;
         double[] color;

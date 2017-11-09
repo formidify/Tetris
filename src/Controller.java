@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,27 +15,15 @@ public class Controller {
         board = new Board(mainView);
     }
 
-    public void landTetrimino(Board board, Tetrimino tetrimino){
-        if (tetrimino.land()){
-            board.putTetrimino(tetrimino);
-            mainView.undrawTetrimino(tetrimino);
-        }
+    public void landTetrimino(Tetrimino tetrimino){
+        mainView.undrawTetrimino(tetrimino);
+        tetrimino.fall();
+        mainView.drawTetrimino(tetrimino);
     }
-
-//    public static void main(String[] args){
-//        // start screen
-//        // board display
-//        while (!controller.endGame()){
-//            // accept keyboard input
-//            // move tetrimino
-//            // checkFullRows
-//        }
-//    }
 
     private boolean endGame() {
         return board.reachBoardTop();
     }
-
 
     void startGame() {
         startView.startScene(primary, this);
@@ -42,5 +31,32 @@ public class Controller {
 
     void startRound() {
         mainView.mainScene(primary);
+
+        while (!endGame()){
+            Tetrimino tetrimino = new Tetrimino(board);
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        int i = 0;
+                        @Override
+                        public void run() {
+                            Platform.runLater(new Runnable(){
+                                @Override
+                                public void run() {
+                                    if (!tetrimino.landed()){
+                                        landTetrimino(tetrimino);
+                                        // check full rows
+                                    } else {
+                                        cancel();
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    0,
+                    1000
+            );
+            board.putTetrimino(tetrimino);
+            mainView.undrawTetrimino(tetrimino);
+        }
     }
 }

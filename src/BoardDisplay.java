@@ -2,6 +2,7 @@
  * Created by chens5 on 11/6/17.
  */
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import static javafx.scene.paint.Color.*;
 
@@ -55,31 +59,47 @@ public class BoardDisplay {
 //        root.setLeft(pane);
 //        root.setCenter(gameGrid);
 
+//
+//        drawTetrimino();
+//        clearLine(23);
+//        moveRow(23);
 
-        drawTetrimino();
-        clearLine(23);
-        moveRow(23);
         Scene scene = new Scene(root, 300, 600);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.ENTER) {
+                System.out.println("You pressed enter");
+            }
+        });
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     //Waiting on tetrimino class. But once we have 100% go on that, tetrimino will be a parameter
-    public void drawTetrimino(){
+    public void drawTetrimino(Tetrimino tetrimino){
         //Rectangle[] rectArray = new Rectangle[4];
-        int [][] position = new int[][] {{23,1}, {23,2}, {23,3}, {22,1}};
-        for (int i=0; i <4; i++){
-            int col = position[i][0];
-            int row = position[i][1];
-            int x = 25* row;
-            int y = 25* col;
-            grid[col][row] = new Rectangle(x, y, 25, 25);
-            grid[col][row].setFill(BLUE);
-            grid[col][row].setStroke(BLACK);
-            root.getChildren().add(grid[col][row]);
+        //int [][] position = new int[][] {{23,1}, {23,2}, {23,3}, {22,1}};
+        int [][] position = tetrimino.getPosition();
+        for (int i=0; i < 4; i++){
+            int row = position[i][0];
+            int col = position[i][1];
+            int x = 25* col;
+            int y = 25* row;
+            grid[row][col] = new Rectangle(x, y, 25, 25);
+            grid[row][col].setFill(BLUE);
+            grid[row][col].setStroke(BLACK);
+            root.getChildren().add(grid[row][col]);
+            //fallSquare(grid[row][col]);
         }
-
     }
+
+//    void fallSquare(Rectangle square){
+//        TranslateTransition translateTransition = new TranslateTransition();
+//        translateTransition.setDuration(Duration.millis(10));
+//        translateTransition.setNode(square);
+//        translateTransition.setByY(25);
+//        translateTransition.play();
+//    }
 
     public void clearLine(int row){
         for (int col =0; col <grid[0].length; col ++){
@@ -142,7 +162,17 @@ public class BoardDisplay {
 
 
     public void undrawTetrimino(Tetrimino tetrimino) {
-
+        int [][] position = tetrimino.getPosition();
+        for (int i=0; i < 4; i++){
+            int row = position[i][0];
+            int col = position[i][1];
+            int x = 25* col;
+            int y = 25* row;
+            grid[row][col] = new Rectangle(x, y, 25, 25);
+            grid[row][col].setFill(BLUE);
+            grid[row][col].setStroke(BLACK);
+            root.getChildren().remove(grid[row][col]);
+        }
     }
 
     public void updateBoardView(Board.Square[][] board) {
