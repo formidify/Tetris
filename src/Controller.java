@@ -74,9 +74,10 @@ public class Controller {
                                 //System.out.println("falling");
                                 // check full rows
                             } else {
+                                System.out.println("landing");
                                 currTetrimino = new Tetrimino(board);
                                 board.putTetrimino(currTetrimino);
-                                //System.out.println("landing");
+
                             }
                         }
                     });

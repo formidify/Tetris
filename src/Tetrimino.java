@@ -127,10 +127,10 @@ public class Tetrimino {
         int col = center[1] + deltaCol;
         // Check whether the tetrimino is moving out of the board
         // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
-        if (row < 2){
-            row = 2;
-        } else if (row > mainBoard.NUMCOLUMN - 3) {
-            row = mainBoard.NUMCOLUMN - 3;
+        if (col < 2){
+            col = 2;
+        } else if (col > mainBoard.NUMCOLUMN - 3) {
+            col = mainBoard.NUMCOLUMN - 3;
         }
 
         updateCenter(row, col);
