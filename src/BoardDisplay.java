@@ -73,10 +73,10 @@ public class BoardDisplay {
          */
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if((key.getCode()== KeyCode.LEFT) ||
-                    (key.getCode() = KeyCode.RIGHT) ||
-                    (key.getCode() = KeyCode.LEFT) ||
-                    key.getCode() = KeyCode.DOWN)) {
-               Controller.respondToKey(key.getCode());
+                    (key.getCode() == KeyCode.RIGHT) ||
+                    (key.getCode() == KeyCode.UP) ||
+                    (key.getCode() == KeyCode.DOWN)) {
+               controller.respondToKey(key.getCode());
             }
         });
 
