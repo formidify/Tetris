@@ -19,10 +19,11 @@ import javafx.stage.Stage;
 
 /**
  * Created by yuq on 11/7/17.
+ * Creates the starting screen for tetris.
  */
 
 
-public class StartGame {
+public class StartDisplay {
     public static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("TETRIS");
 
@@ -47,7 +48,12 @@ public class StartGame {
         primaryStage.show();
     }
 
-
+    /*
+    * Creating an overall grid pane for the starting screen and populating pane with buttons
+    * for starting the game, starting the tutorial, or more options for game look and control.
+    * Currently, we have not yet implemented the tutorial or the more options as we are 
+    * yet unsure of what they will look like or what aspects of the game they will have control over.
+    */
     private Node addButtons() {
         GridPane buttonPane = new GridPane();
         buttonPane.setAlignment(Pos.CENTER);
@@ -101,6 +107,9 @@ public class StartGame {
         return buttonPane;
     }
 
+    /*
+    * Method for adding text with correct font and padding. Weight and size are specified by user.
+    */
     private Node addText(Text text, FontWeight fontWeight, int fontSize) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);

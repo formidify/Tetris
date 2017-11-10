@@ -220,7 +220,7 @@ public class BoardDisplay {
      * @param: a tetrimino object
      */
     void updateNextTetrimino(Tetrimino tetrimino){
-        //Test purpose
+        //Test purpose:
         // int [][] coord = {{-1,-1}, {-1,0}, {0,0}, {1,0}};
         int[][] coord = tetrimino.getRelativePosition();
         Pane next = (Pane) nextTetrimino.getChildren().get(1);

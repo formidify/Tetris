@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 public class Controller {
     Stage primary;
-    StartGame startView;
+    StartDisplay startView;
     BoardDisplay mainView;
     Board board;
     Tetrimino currTetrimino;
@@ -16,7 +16,7 @@ public class Controller {
 
     Controller(Stage primaryStage){
         primary = primaryStage;
-        startView = new StartGame();
+        startView = new StartDisplay();
         mainView = new BoardDisplay();
         board = new Board(mainView);
     }
