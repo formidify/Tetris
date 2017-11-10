@@ -139,7 +139,9 @@ public class BoardDisplay {
         }
     }
 
-
+    /*
+     * Constructing score displayer
+     */
     Pane scoreDisplay(){
 
     }
