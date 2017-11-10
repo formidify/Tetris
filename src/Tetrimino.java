@@ -171,7 +171,7 @@ public class Tetrimino {
         center = new int[] {row, col};
     }
 
-    public int[][] getPosition(){
+    int[][] getPosition(){
         return position;
     }
 
@@ -185,7 +185,7 @@ public class Tetrimino {
     }
 
     // Update center after change in x and y
-    public void translate(int deltaRow, int deltaCol){
+    void translate(int deltaRow, int deltaCol){
         int row = center[0] + deltaRow;
         int col = center[1] + deltaCol;
         // Check whether the tetrimino is moving out of the board
@@ -199,15 +199,15 @@ public class Tetrimino {
         updateCenter(row, col);
     }
 
-    public void rotate(){
+    void rotate(){
         orientation = (orientation + 1) % 4;
     }
 
-    public void fallByOneSquare() {
+    void fallByOneSquare() {
         translate(1, 0);
     }
 
-    public void fallToBottom() {
+    void fallToBottom() {
         // TODO: add in a private var that tracks the bottom most row and replace center[0] with it
         translate(mainBoard.NUMROW - center[0]-2,0);
     }
@@ -217,7 +217,7 @@ public class Tetrimino {
         updatePosition();
     }
 
-    public boolean landed() {
+    boolean landed() {
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
