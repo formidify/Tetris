@@ -142,9 +142,8 @@ public class BoardDisplay {
 
     Pane scoreDisplay(){
 
-
     }
-    void nextTetriminoDisplay(){
+    Pane nextTetriminoDisplay(){
 
     }
 
