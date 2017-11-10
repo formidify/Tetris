@@ -30,53 +30,44 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
+
 import static javafx.scene.paint.Color.*;
 
 public class BoardDisplay {
-    Board gameBoard;
-    Pane root;
-    Rectangle[][] grid;
-    KeyCode keyPressed;
 
-    //TextArea status = new TextArea("");
-    //Group gameGrid;
+    private static final double SCENE_WIDTH = 800;
+    private static final double SCENE_HEIGHT = 800;
+    private static final double BOARD_WIDTH = 300;
+    private static final double BOARD_HEIGHT = 600;
+    private static final int GRID_ROWS = 24;
+    private static final int GRID_COLS = 12;
+    BorderPane root;
+    Pane gameGrid;
+    Rectangle[][] grid;
+
 
     public BoardDisplay(){
-        root = new Pane();
-        grid = new Rectangle[24][12];
+        root = new BorderPane();
+        gameGrid = new Pane();
+        grid = new Rectangle[GRID_ROWS][GRID_COLS];
    }
 
-    public void mainScene(Stage primaryStage) {
-        //BorderPane root = new BorderPane();
+    public void mainScene(Stage primaryStage, Controller controller) {
+       gameGrid.setPrefSize(BOARD_WIDTH, BOARD_HEIGHT);
+       root.setCenter(gameGrid);
 
-//        gameGrid = new Group();
-//
-//        FlowPane pane = new FlowPane();
-//        status.setText("Status messages will appear here.");
-//        status.setFont(Font.font("Times New Roman", FontWeight.NORMAL, 14));
-//        status.setWrapText(true);
-//        status.setPrefColumnCount(20);
-//        pane.getChildren().add(status);
-//
-//        root.setLeft(pane);
-//        root.setCenter(gameGrid);
 
-//
-//        drawTetrimino();
-//        clearLine(23);
-//        moveRow(23);
-
-        Scene scene = new Scene(root, 300, 600);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         /*
-         * Sets the variable keyPressed to the key code. The controller will use keyPressed
+         * Updates the controller whenever a key is pressed
          */
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if((key.getCode()== KeyCode.LEFT) ||
-                    (key.getCode() = KeyCode.RIGHT) ||
-                    (key.getCode() = KeyCode.LEFT) ||
-                    key.getCode() = KeyCode.DOWN)) {
-               keyPressed = key.getCode();
+                    (key.getCode() == KeyCode.RIGHT) ||
+                    (key.getCode() == KeyCode.UP) ||
+                    (key.getCode() == KeyCode.DOWN)) {
+               controller.respondToKey(key.getCode());
             }
         });
 
@@ -85,13 +76,6 @@ public class BoardDisplay {
 
     }
 
-    /*
-     * Accessor for keyPressed variable for controller
-     * @return: key code
-     */
-    KeyCode getKeyPressed(){
-        return keyPressed;
-    }
 
     /*
      * Draws a tetrimino in the pane using rectangles. We base the position of the rectangles on
@@ -156,48 +140,11 @@ public class BoardDisplay {
     }
 
 
-    void scoreDisplay(){
+    Pane scoreDisplay(){
 
 
     }
     void nextTetriminoDisplay(){
-
-    }
-
-    void updateTetrimino(Tetrimino teris){
-
-    }
-
-
-    boolean isChanged(){
-        return true;
-    }
-
-    void updateNewSquares(){
-
-    }
-
-    private void colorSquares(){
-
-    }
-
-    private void displayBlocks(){
-
-    }
-
-    public void startDisplay(){
-
-    }
-
-    public void endDisplay(){
-
-    }
-
-
-
-
-
-    public void updateBoardView(Board.Square[][] board) {
 
     }
 
