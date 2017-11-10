@@ -37,15 +37,21 @@ public class BoardDisplay {
     private static final double SCENE_HEIGHT = 800;
     private static final double BOARD_WIDTH = 300;
     private static final double BOARD_HEIGHT = 600;
+    private static final double NEXTTETRIMINO_WIDTH = 100;
+    private static final double NEXTTETRIMINO_HEIGHT = 50;
     private static final int GRID_ROWS = 24;
     private static final int GRID_COLS = 12;
     BorderPane root;
     Pane gameGrid;
+    BorderPane score;
+    BorderPane nextTetrimino;
     Rectangle[][] grid;
 
 
     public BoardDisplay(){
         root = new BorderPane();
+        score = new BorderPane();
+        nextTetrimino = new BorderPane();
         gameGrid = new Pane();
         grid = new Rectangle[GRID_ROWS][GRID_COLS];
    }
@@ -57,11 +63,16 @@ public class BoardDisplay {
         Border gameBorder = new Border(borderStroke);
 
         gameGrid.setMaxSize(BOARD_WIDTH, BOARD_HEIGHT);
+        gameGrid.setMinSize(BOARD_WIDTH, BOARD_HEIGHT);
         gameGrid.setBorder(gameBorder);
 
         HBox title = addTitle();
-        BorderPane score = addScoreDisplay();
-        BorderPane nextTetrimino = addNextTetriminoDisplay();
+        score = addScoreDisplay();
+        nextTetrimino = addNextTetriminoDisplay();
+
+        //tests
+        updateScore(40);
+        updateNextTetrimino();
 
         root.setCenter(gameGrid);
         root.setLeft(nextTetrimino);
@@ -158,6 +169,7 @@ public class BoardDisplay {
      */
     BorderPane addScoreDisplay(){
         BorderPane scoreBox = new BorderPane();
+        scoreBox.setPadding(new Insets(30,30,10,0));
 
         Text scoreTitle = new Text("SCORE");
         Text score = new Text("0");
@@ -166,6 +178,7 @@ public class BoardDisplay {
 
         scoreBox.setTop(scoreTitle);
         scoreBox.setCenter(score);
+
         return scoreBox;
     }
 
@@ -175,9 +188,17 @@ public class BoardDisplay {
      */
     BorderPane addNextTetriminoDisplay(){
         BorderPane tetriminoBox = new BorderPane();
+        tetriminoBox.setPadding(new Insets(30,0,10,50));
+
         Text title = new Text("NEXT");
         title.setFont(Font.font("Chalkduster", FontWeight.BOLD, 40));
         tetriminoBox.setTop(title);
+
+        Pane next = new Pane();
+        next.setMaxSize(NEXTTETRIMINO_WIDTH, NEXTTETRIMINO_HEIGHT);
+        next.setMinSize(NEXTTETRIMINO_WIDTH, NEXTTETRIMINO_HEIGHT);
+        tetriminoBox.setCenter(next);
+
         return tetriminoBox;
 
     }
@@ -188,12 +209,47 @@ public class BoardDisplay {
      */
     HBox addTitle(){
         HBox titleBox = new HBox();
+        titleBox.setPadding(new Insets(30,0,0,0));
         titleBox.setAlignment(Pos.CENTER);
         Text title  = new Text("TETRIS");
         title.setFont(Font.font("Chalkduster", FontWeight.BOLD, 60));
         titleBox.getChildren().add(title);
 
         return titleBox;
+    }
+
+    /*
+     * Update the display for next tetrimino
+     * @param: a tetrimino object
+     */
+    void updateNextTetrimino(){
+        //Test purpose
+        int [][] coord = {{-1,-1}, {-1,0}, {0,0}, {1,0}};
+
+        Pane next = (Pane) nextTetrimino.getChildren().get(1);
+        if (!next.getChildren().isEmpty()){
+            next.getChildren().clear();
+        }
+
+        for (int i = 0; i < 4; i++){
+            int blockSize = (int) NEXTTETRIMINO_HEIGHT / 2;
+            int x = blockSize * (1 + coord[i][1]);
+            int y = blockSize * (1 + coord[i][0]);
+            Rectangle rec = new Rectangle(x, y, blockSize, blockSize);
+            rec.setFill(GREEN);
+            rec.setStroke(BLACK);
+            next.getChildren().add(rec);
+        }
+    }
+
+
+    /*
+     * Update the display of the new score
+     * @param: new score
+     */
+    void updateScore(int newScore){
+        Text change = (Text) score.getChildren().get(1);
+        change.setText(Integer.toString(newScore));
     }
 
 
