@@ -1,7 +1,7 @@
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.input.KeyCode;
 import java.util.Observer;
 
 public class Controller {

@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Board {
-    public static final int NUMCOLUMN = 10;
-    public static final int NUMROW = 20;
+    public static final int NUMCOLUMN = 12;
+    public static final int NUMROW = 24;
 
     Square[][] board;
     BoardDisplay boardView;
@@ -27,7 +27,7 @@ public class Board {
             square.color = tetrimino.getColor();
             square.isEmpty = false;
         }
-        boardView.updateBoardView(board);
+        //boardView.updateBoardView(board);
     }
 
     boolean rowIsFull(int row){
