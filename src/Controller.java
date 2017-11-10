@@ -53,6 +53,7 @@ public class Controller {
                                 System.out.println("falling");
                                 // check full rows
                             } else {
+                                cancel();
                                 board.putTetrimino(tetrimino);
                                 System.out.println("landing");
                             }
