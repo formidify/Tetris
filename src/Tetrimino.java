@@ -217,7 +217,7 @@ public class Tetrimino {
 
     // Update center after change in x and y
     void translate(int deltaRow, int deltaCol){
-        int row = center[0] + deltaRow;
+        // translating horizontally
         int col = center[1] + deltaCol;
         // Check whether the tetrimino is moving out of the board
         // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
@@ -226,7 +226,14 @@ public class Tetrimino {
         } else if (col > mainBoard.NUMCOLUMN - 2) {
             col = mainBoard.NUMCOLUMN - 2;
         }
+        // translating vertically
+        int row = center[0];
+        for (int i = 0; i < deltaRow; i++) {
+            if (!landed()){
+                row++;
+            }
 
+        }
         updateCenter(row, col);
     }
 
