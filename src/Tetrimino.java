@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Tetrimino {
 
     private static String[] shapes = {"Straight", "Square", "L", "J", "Z", "S", "T"};
@@ -15,9 +17,9 @@ public class Tetrimino {
 
     Tetrimino(Board board){
         speed = 1;
-        shape = shapes[2];
+        shape = shapes[new Random().nextInt(8)];
         orientation = orientations[0];
-        center = new int[] {0,5};
+        center = new int[] {1,5};
         position = new int[4][2];
         color = new double[] {0,0,0,0};
         mainBoard = board;
@@ -38,10 +40,55 @@ public class Tetrimino {
                         break;
                 }
                 break;
+            case "Square":
+                switch (orientation) {
+                    case 0:
+                        relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,-1}, {0,-0}};
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case "L":
                 switch (orientation) {
                     case 0:
                         relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,0}, {1,0}};
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "J":
+                switch (orientation) {
+                    case 0:
+                        relativePosition = new int[][] {{-1,1}, {-1,0}, {0,0}, {1,0}};
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "Z":
+                switch (orientation) {
+                    case 0:
+                        relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,0}, {0,1}};
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "S":
+                switch (orientation) {
+                    case 0:
+                        relativePosition = new int[][] {{-1,1}, {-1,0}, {0,0}, {-1,0}};
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "T":
+                switch (orientation) {
+                    case 0:
+                        relativePosition = new int[][] {{-1,0}, {0,-1}, {0,0}, {0,1}};
                         break;
                     default:
                         break;
@@ -78,7 +125,18 @@ public class Tetrimino {
     public void translate(int deltaRow, int deltaCol){
         int row = center[0] + deltaRow;
         int col = center[1] + deltaCol;
+        // Check whether the tetrimino is moving out of the board
+        // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
+        if (row < 2){
+            row = 2;
+        } else if (row > mainBoard.NUMCOLUMN - 3) {
+            row = mainBoard.NUMCOLUMN - 3;
+        }
+
         updateCenter(row, col);
+    }
+
+    public void rotate(){
     }
 
     public void fallByOneSquare() {
