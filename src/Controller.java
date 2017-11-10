@@ -19,7 +19,7 @@ public class Controller {
 
     public void landTetrimino(Tetrimino tetrimino){
         mainView.undrawTetrimino(tetrimino);
-        tetrimino.fall();
+        tetrimino.fallByOneSquare();
         mainView.drawTetrimino(tetrimino);
     }
 

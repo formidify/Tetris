@@ -57,9 +57,8 @@ public class Tetrimino {
         return center;
     }
 
-    private void setCenter(int[] xy){
-        center = new int[] {xy[0], xy[1]};
-        updatePosition();
+    private void setCenter(int row, int col){
+        center = new int[] {row, col};
     }
 
     public int[][] getPosition(){
@@ -75,16 +74,19 @@ public class Tetrimino {
         // Tell view
     }
 
-    /*
-     * Update center after change in x and y
-     */
-    public void translate(int[] deltaXY){
-        updateCenter(deltaXY);
+    // Update center after change in x and y
+    public void translate(int deltaRow, int deltaCol){
+        int row = center[0] + deltaRow;
+        int col = center[1] + deltaCol;
+        updateCenter(row, col);
     }
 
-    private void updateCenter(int[] deltaRowCol) {
-        int[] newCenter = new int[] {center[0] + deltaRowCol[0], center[1] + deltaRowCol[1]};
-        setCenter(newCenter);
+    public void fallByOneSquare() {
+        translate(1, 0);
+    }
+
+    private void updateCenter(int row, int col) {
+        setCenter(row, col);
         updatePosition();
     }
 
@@ -102,9 +104,7 @@ public class Tetrimino {
         return false;
     }
 
-    public void fall() {
-        translate(new int[] {1,0});
-    }
+
 
     double[] getColor() {
         return color;
