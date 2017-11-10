@@ -16,9 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.shape.*;
 import javafx.scene.Group;
@@ -35,7 +33,7 @@ import static javafx.scene.paint.Color.*;
 
 public class BoardDisplay {
 
-    private static final double SCENE_WIDTH = 800;
+    private static final double SCENE_WIDTH = 700;
     private static final double SCENE_HEIGHT = 800;
     private static final double BOARD_WIDTH = 300;
     private static final double BOARD_HEIGHT = 600;
@@ -53,8 +51,22 @@ public class BoardDisplay {
    }
 
     public void mainScene(Stage primaryStage, Controller controller) {
-       gameGrid.setPrefSize(BOARD_WIDTH, BOARD_HEIGHT);
-       root.setCenter(gameGrid);
+
+        BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+                CornerRadii.EMPTY, BorderWidths.DEFAULT);
+        Border gameBorder = new Border(borderStroke);
+
+        gameGrid.setMaxSize(BOARD_WIDTH, BOARD_HEIGHT);
+        gameGrid.setBorder(gameBorder);
+
+        HBox title = addTitle();
+        BorderPane score = addScoreDisplay();
+        BorderPane nextTetrimino = addNextTetriminoDisplay();
+
+        root.setCenter(gameGrid);
+        root.setLeft(nextTetrimino);
+        root.setRight(score);
+        root.setTop(title);
 
 
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
@@ -71,6 +83,7 @@ public class BoardDisplay {
             }
         });
 
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -92,7 +105,7 @@ public class BoardDisplay {
             grid[row][col] = new Rectangle(x, y, 25, 25);
             grid[row][col].setFill(BLUE);
             grid[row][col].setStroke(BLACK);
-            root.getChildren().add(grid[row][col]);
+            gameGrid.getChildren().add(grid[row][col]);
         }
     }
 
@@ -105,7 +118,7 @@ public class BoardDisplay {
         for (int i=0; i < 4; i++){
             int row = position[i][0];
             int col = position[i][1];
-            root.getChildren().remove(grid[row][col]);
+            gameGrid.getChildren().remove(grid[row][col]);
             grid[row][col] = null;
         }
     }
@@ -117,7 +130,7 @@ public class BoardDisplay {
      void clearLine(int row){
         for (int col =0; col <grid[0].length; col ++){
             if(grid[row][col] != null){
-            root.getChildren().remove(grid[row][col]);}
+            gameGrid.getChildren().remove(grid[row][col]);}
         }
     }
 
@@ -133,7 +146,7 @@ public class BoardDisplay {
                     root.getChildren().remove(grid[i][j]);
                     grid[i][j] = null;
                     grid[i+1][j].setY(grid[i+1][j].getY() + 25);
-                    root.getChildren().add(grid[i+1][j]);
+                    gameGrid.getChildren().add(grid[i+1][j]);
                 }
             }
         }
@@ -141,12 +154,46 @@ public class BoardDisplay {
 
     /*
      * Constructing score displayer
+     * @return: BorderPane with top set to the title "SCORE" and the center containing the value of the score
      */
-    Pane scoreDisplay(){
+    BorderPane addScoreDisplay(){
+        BorderPane scoreBox = new BorderPane();
+
+        Text scoreTitle = new Text("SCORE");
+        Text score = new Text("0");
+        score.setFont(Font.font("Chalkduster", FontWeight.BOLD, 60));
+        scoreTitle.setFont(Font.font("Chalkduster", FontWeight.BOLD, 40));
+
+        scoreBox.setTop(scoreTitle);
+        scoreBox.setCenter(score);
+        return scoreBox;
+    }
+
+    /*
+     * Constructing the next tetrimino display
+     * @return: BorderPane with top set to the title "NEXT" and the center containing the next tetrimino
+     */
+    BorderPane addNextTetriminoDisplay(){
+        BorderPane tetriminoBox = new BorderPane();
+        Text title = new Text("NEXT");
+        title.setFont(Font.font("Chalkduster", FontWeight.BOLD, 40));
+        tetriminoBox.setTop(title);
+        return tetriminoBox;
 
     }
-    Pane nextTetriminoDisplay(){
 
+    /*
+     * Constructing the title
+     * @return: HBox containing title
+     */
+    HBox addTitle(){
+        HBox titleBox = new HBox();
+        titleBox.setAlignment(Pos.CENTER);
+        Text title  = new Text("TETRIS");
+        title.setFont(Font.font("Chalkduster", FontWeight.BOLD, 60));
+        titleBox.getChildren().add(title);
+
+        return titleBox;
     }
 
 
