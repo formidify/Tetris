@@ -34,13 +34,15 @@ import static javafx.scene.paint.Color.*;
 
 public class BoardDisplay {
     Board gameBoard;
-    Group root;
+    Pane root;
     Rectangle[][] grid;
+    KeyCode keyPressed;
+
     //TextArea status = new TextArea("");
     //Group gameGrid;
 
     public BoardDisplay(){
-        root = new Group();
+        root = new Pane();
         grid = new Rectangle[24][12];
    }
 
@@ -65,20 +67,38 @@ public class BoardDisplay {
 //        moveRow(23);
 
         Scene scene = new Scene(root, 300, 600);
+
+        /*
+         * Sets the variable keyPressed to the key code. The controller will use keyPressed
+         */
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.ENTER) {
-                System.out.println("You pressed enter");
+            if((key.getCode()== KeyCode.LEFT) ||
+                    (key.getCode() = KeyCode.RIGHT) ||
+                    (key.getCode() = KeyCode.LEFT) ||
+                    key.getCode() = KeyCode.DOWN)) {
+               keyPressed = key.getCode();
             }
         });
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
-    //Waiting on tetrimino class. But once we have 100% go on that, tetrimino will be a parameter
-    public void drawTetrimino(Tetrimino tetrimino){
-        //Rectangle[] rectArray = new Rectangle[4];
-        //int [][] position = new int[][] {{23,1}, {23,2}, {23,3}, {22,1}};
+    /*
+     * Accessor for keyPressed variable for controller
+     * @return: key code
+     */
+    KeyCode getKeyPressed(){
+        return keyPressed;
+    }
+
+    /*
+     * Draws a tetrimino in the pane using rectangles. We base the position of the rectangles on
+     * the position given by the tetrimino class.
+     * @param: tetrimino to draw
+     */
+    void drawTetrimino(Tetrimino tetrimino){
         int [][] position = tetrimino.getPosition();
         for (int i=0; i < 4; i++){
             int row = position[i][0];
@@ -92,14 +112,36 @@ public class BoardDisplay {
         }
     }
 
-    public void clearLine(int row){
+    /*
+     * Undraws the tetrimino.
+     * @param: tetrimino to clear
+     */
+    void undrawTetrimino(Tetrimino tetrimino) {
+        int [][] position = tetrimino.getPosition();
+        for (int i=0; i < 4; i++){
+            int row = position[i][0];
+            int col = position[i][1];
+            root.getChildren().remove(grid[row][col]);
+            grid[row][col] = null;
+        }
+    }
+
+    /*
+     * Clears a row in the board
+     * @param: row to clear
+     */
+     void clearLine(int row){
         for (int col =0; col <grid[0].length; col ++){
             if(grid[row][col] != null){
             root.getChildren().remove(grid[row][col]);}
         }
     }
 
-    public void moveRow(int row) {
+    /*
+     * Moves a row down in the board
+     * @param: row to move down
+     */
+    void moveRow(int row) {
         for (int i = row - 1; i >= 0; i--) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] != null) {
@@ -113,24 +155,25 @@ public class BoardDisplay {
         }
     }
 
-    public void scoreDisplay(){
+
+    void scoreDisplay(){
 
 
     }
-    public void nextTetriminoDisplay(){
+    void nextTetriminoDisplay(){
 
     }
 
-    public void updateTetrimino(Tetrimino teris){
+    void updateTetrimino(Tetrimino teris){
 
     }
 
 
-    private boolean isChanged(){
+    boolean isChanged(){
         return true;
     }
 
-    private void updateNewSquares(){
+    void updateNewSquares(){
 
     }
 
@@ -152,15 +195,7 @@ public class BoardDisplay {
 
 
 
-    public void undrawTetrimino(Tetrimino tetrimino) {
-        int [][] position = tetrimino.getPosition();
-        for (int i=0; i < 4; i++){
-            int row = position[i][0];
-            int col = position[i][1];
-            root.getChildren().remove(grid[row][col]);
-            grid[row][col] = null;
-        }
-    }
+
 
     public void updateBoardView(Board.Square[][] board) {
 
