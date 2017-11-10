@@ -3,6 +3,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller {
     Stage primary;
@@ -17,7 +19,7 @@ public class Controller {
         board = new Board(mainView);
     }
 
-    public void landTetrimino(Tetrimino tetrimino){
+    public void moveTetriminoDown(Tetrimino tetrimino){
         mainView.undrawTetrimino(tetrimino);
         tetrimino.fallByOneSquare();
         mainView.drawTetrimino(tetrimino);
@@ -38,30 +40,29 @@ public class Controller {
     void startRound() {
         mainView.mainScene(primary, this);
 
-        while (!endGame()){
+        while (!endGame()) {
+            System.out.println("!endGame()");
             Tetrimino tetrimino = new Tetrimino(board);
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
+            Timer timer = new java.util.Timer();
+            TimerTask timerTask = new java.util.TimerTask() {
+                public void run() {
+                    Platform.runLater(new Runnable() {
                         public void run() {
-                            Platform.runLater(new Runnable(){
-                                @Override
-                                public void run() {
-                                    if (!tetrimino.landed()){
-                                        landTetrimino(tetrimino);
-                                        // check full rows
-                                    } else {
-                                        cancel();
-                                    }
-                                }
-                            });
+                            if (!tetrimino.landed()) {
+                                moveTetriminoDown(tetrimino);
+                                System.out.println("falling");
+                                // check full rows
+                            } else {
+                                board.putTetrimino(tetrimino);
+                                System.out.println("landing");
+                            }
                         }
-                    },
-                    0,
-                    (long) (1000/tetrimino.speed)
-            );
-            board.putTetrimino(tetrimino);
-            mainView.undrawTetrimino(tetrimino);
+                    });
+                }
+            };
+            timer.schedule(timerTask, 0, (long) (1000 / tetrimino.speed));
+
         }
+        System.out.println("out of while");
     }
 }
