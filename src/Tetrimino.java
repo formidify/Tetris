@@ -17,7 +17,7 @@ public class Tetrimino {
 
     Tetrimino(Board board){
         speed = 1;
-        shape = shapes[new Random().nextInt(8)];
+        shape = shapes[new Random().nextInt(7)];
         orientation = orientations[0];
         center = new int[] {1,5};
         position = new int[4][2];
@@ -34,7 +34,16 @@ public class Tetrimino {
             case "Straight":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,0}, {0,0}, {1,0}, {2,0}};
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {1,0}, {2,0}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {0,2}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {1,0}, {2,0}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {0,2}};
                         break;
                     default:
                         break;
@@ -43,7 +52,16 @@ public class Tetrimino {
             case "Square":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,-1}, {0,-0}};
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
                         break;
                     default:
                         break;
@@ -52,7 +70,16 @@ public class Tetrimino {
             case "L":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,0}, {1,0}};
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {1,0}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {-1,1}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {1,0}, {1,1}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {0,-1}, {1,-1}, {0,1}};
                         break;
                     default:
                         break;
@@ -61,7 +88,16 @@ public class Tetrimino {
             case "J":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,1}, {-1,0}, {0,0}, {1,0}};
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {1,0}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {1,1}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {1,-1}, {1,0}, {-1,0}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {0,1}};
                         break;
                     default:
                         break;
@@ -70,7 +106,16 @@ public class Tetrimino {
             case "Z":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,-1}, {-1,0}, {0,0}, {0,1}};
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {0,1}, {1,0}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {0,1}, {1,0}};
                         break;
                     default:
                         break;
@@ -79,7 +124,16 @@ public class Tetrimino {
             case "S":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,1}, {-1,0}, {0,0}, {-1,0}};
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,-1}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
                         break;
                     default:
                         break;
@@ -88,7 +142,16 @@ public class Tetrimino {
             case "T":
                 switch (orientation) {
                     case 0:
-                        relativePosition = new int[][] {{-1,0}, {0,-1}, {0,0}, {0,1}};
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {0,-1}, {0,1}};
+                        break;
+                    case 1:
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {0,1}, {1,0}};
+                        break;
+                    case 2:
+                        relativePosition = new int[][] {{0,0}, {1,0}, {0,-1}, {0,1}};
+                        break;
+                    case 3:
+                        relativePosition = new int[][] {{0,0}, {-1,0}, {0,-1}, {1,0}};
                         break;
                     default:
                         break;
@@ -127,20 +190,26 @@ public class Tetrimino {
         int col = center[1] + deltaCol;
         // Check whether the tetrimino is moving out of the board
         // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
-        if (col < 2){
-            col = 2;
-        } else if (col > mainBoard.NUMCOLUMN - 3) {
-            col = mainBoard.NUMCOLUMN - 3;
+        if (col < 1){
+            col = 1;
+        } else if (col > mainBoard.NUMCOLUMN - 2) {
+            col = mainBoard.NUMCOLUMN - 2;
         }
 
         updateCenter(row, col);
     }
 
     public void rotate(){
+        orientation = (orientation + 1) % 4;
     }
 
     public void fallByOneSquare() {
         translate(1, 0);
+    }
+
+    public void fallToBottom() {
+        // TODO: add in a private var that tracks the bottom most row and replace center[0] with it
+        translate(mainBoard.NUMROW - center[0]-2,0);
     }
 
     private void updateCenter(int row, int col) {
@@ -152,7 +221,7 @@ public class Tetrimino {
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
-            if (row == mainBoard.NUMROW - 1) {
+            if (row == mainBoard.NUMROW - 2) {
                 return true;
             }
             if (!mainBoard.board[row + 1][col].isEmpty){
@@ -162,9 +231,9 @@ public class Tetrimino {
         return false;
     }
 
-
-
     double[] getColor() {
         return color;
     }
+
+
 }

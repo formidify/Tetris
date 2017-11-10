@@ -89,7 +89,8 @@ public class BoardDisplay {
             if((key.getCode()== KeyCode.LEFT) ||
                     (key.getCode() == KeyCode.RIGHT) ||
                     (key.getCode() == KeyCode.UP) ||
-                    (key.getCode() == KeyCode.DOWN)) {
+                    (key.getCode() == KeyCode.DOWN) ||
+                    (key.getCode() == KeyCode.SPACE)) {
                controller.respondToKey(key.getCode());
             }
         });
