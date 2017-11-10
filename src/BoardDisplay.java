@@ -37,7 +37,7 @@ public class BoardDisplay {
     private static final double SCENE_HEIGHT = 800;
     private static final double BOARD_WIDTH = 300;
     private static final double BOARD_HEIGHT = 600;
-    private static final double NEXTTETRIMINO_WIDTH = 100;
+    private static final double NEXTTETRIMINO_WIDTH = 50;
     private static final double NEXTTETRIMINO_HEIGHT = 50;
     private static final int GRID_ROWS = 24;
     private static final int GRID_COLS = 12;
@@ -69,10 +69,6 @@ public class BoardDisplay {
         HBox title = addTitle();
         score = addScoreDisplay();
         nextTetrimino = addNextTetriminoDisplay();
-
-        //tests
-        updateScore(40);
-        updateNextTetrimino();
 
         root.setCenter(gameGrid);
         root.setLeft(nextTetrimino);
@@ -115,7 +111,7 @@ public class BoardDisplay {
             int x = 25* col;
             int y = 25* row;
             grid[row][col] = new Rectangle(x, y, 25, 25);
-            grid[row][col].setFill(BLUE);
+            grid[row][col].setFill(tetrimino.getColor());
             grid[row][col].setStroke(BLACK);
             gameGrid.getChildren().add(grid[row][col]);
         }
@@ -223,10 +219,10 @@ public class BoardDisplay {
      * Update the display for next tetrimino
      * @param: a tetrimino object
      */
-    void updateNextTetrimino(){
+    void updateNextTetrimino(Tetrimino tetrimino){
         //Test purpose
-        int [][] coord = {{-1,-1}, {-1,0}, {0,0}, {1,0}};
-
+        // int [][] coord = {{-1,-1}, {-1,0}, {0,0}, {1,0}};
+        int[][] coord = tetrimino.getRelativePosition();
         Pane next = (Pane) nextTetrimino.getChildren().get(1);
         if (!next.getChildren().isEmpty()){
             next.getChildren().clear();
@@ -237,7 +233,7 @@ public class BoardDisplay {
             int x = blockSize * (1 + coord[i][1]);
             int y = blockSize * (1 + coord[i][0]);
             Rectangle rec = new Rectangle(x, y, blockSize, blockSize);
-            rec.setFill(GREEN);
+            rec.setFill(tetrimino.getColor());
             rec.setStroke(BLACK);
             next.getChildren().add(rec);
         }

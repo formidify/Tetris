@@ -1,7 +1,8 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import javafx.scene.paint.Color;
 public class Board {
     public static final int NUMCOLUMN = 12;
     public static final int NUMROW = 24;
@@ -62,11 +63,11 @@ public class Board {
     class Square{
 
         boolean isEmpty;
-        double[] color;
+        Color color;
 
         Square(){
             isEmpty = true;
-            color = new double[] {1,1,1,1};
+            color = Color.WHITE;
         }
     }
 }

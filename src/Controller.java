@@ -67,6 +67,8 @@ public class Controller {
     void startRound() {
         mainView.mainScene(primary, this);
         currTetrimino = new Tetrimino(board);
+        nextTetrimino = new Tetrimino(board);
+        mainView.updateNextTetrimino(nextTetrimino);
         Timer timer = new java.util.Timer();
         TimerTask timerTask = new java.util.TimerTask() {
             public void run() {
@@ -76,10 +78,13 @@ public class Controller {
                             moveTetriminoDown(currTetrimino);
                             //System.out.println("falling");
                             // check full rows
+                            mainView.updateScore(40);
                         } else {
                             System.out.println("landing");
                             board.putTetrimino(currTetrimino);
-                            currTetrimino = new Tetrimino(board);
+                            currTetrimino = nextTetrimino;
+                            nextTetrimino = new Tetrimino(board);
+                            mainView.updateNextTetrimino(nextTetrimino);
                         }
                     }
                 });

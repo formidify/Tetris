@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 public class Tetrimino {
@@ -10,7 +12,7 @@ public class Tetrimino {
     private int[] center;
     private int[][] position;
     double speed;
-    private double[] color;
+    private Color color;
     Board mainBoard;
     BoardDisplay boardView;
     boolean landing; // vs falling
@@ -18,17 +20,46 @@ public class Tetrimino {
     Tetrimino(Board board){
         speed = 1;
         shape = shapes[new Random().nextInt(7)];
-        orientation = orientations[0];
+        orientation = orientations[new Random().nextInt(4)];
         center = new int[] {1,5};
         position = new int[4][2];
-        color = new double[] {0,0,0,0};
+        color = chooseColor();
         mainBoard = board;
         boardView = board.boardView;
         landing = false;
 
     }
 
-    private int[][] getRelativePosition() {
+    private Color chooseColor() {
+        Color tetriminoColor = Color.BLACK;
+        switch (shape) {
+            case "Straight":
+                tetriminoColor = Color.LIGHTBLUE;
+                break;
+            case "Square":
+                tetriminoColor = Color.YELLOW;
+            case "L":
+                tetriminoColor = Color.ORANGE;
+                break;
+            case "J":
+                tetriminoColor = Color.BLUE;
+                break;
+            case "Z":
+                tetriminoColor = Color.GREEN;
+                break;
+            case "S":
+                tetriminoColor = Color.RED;
+                break;
+            case "T":
+                tetriminoColor = Color.PURPLE;
+                break;
+            default:
+                break;
+        }
+        return tetriminoColor;
+    }
+
+    int[][] getRelativePosition() {
         int[][] relativePosition = new int[4][2];
         switch (shape) {
             case "Straight":
@@ -130,7 +161,7 @@ public class Tetrimino {
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
                         break;
                     case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,1}};
                         break;
                     case 3:
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
@@ -209,7 +240,7 @@ public class Tetrimino {
 
     void fallToBottom() {
         // TODO: add in a private var that tracks the bottom most row and replace center[0] with it
-        translate(mainBoard.NUMROW - center[0]-2,0);
+        translate(mainBoard.NUMROW - center[0]-3,0);
     }
 
     private void updateCenter(int row, int col) {
@@ -231,7 +262,7 @@ public class Tetrimino {
         return false;
     }
 
-    double[] getColor() {
+    Color getColor() {
         return color;
     }
 
