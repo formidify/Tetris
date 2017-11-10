@@ -75,6 +75,9 @@ public class Tetrimino {
         // Tell view
     }
 
+    /*
+     * Update center after change in x and y
+     */
     public void translate(int[] deltaXY){
         updateCenter(deltaXY);
     }

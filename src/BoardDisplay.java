@@ -30,6 +30,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
+
 import static javafx.scene.paint.Color.*;
 
 public class BoardDisplay {
@@ -37,7 +38,6 @@ public class BoardDisplay {
     Pane root;
     Rectangle[][] grid;
     KeyCode keyPressed;
-
     //TextArea status = new TextArea("");
     //Group gameGrid;
 
@@ -46,7 +46,7 @@ public class BoardDisplay {
         grid = new Rectangle[24][12];
    }
 
-    public void mainScene(Stage primaryStage) {
+    public void mainScene(Stage primaryStage, Controller controller) {
         //BorderPane root = new BorderPane();
 
 //        gameGrid = new Group();
@@ -76,7 +76,7 @@ public class BoardDisplay {
                     (key.getCode() = KeyCode.RIGHT) ||
                     (key.getCode() = KeyCode.LEFT) ||
                     key.getCode() = KeyCode.DOWN)) {
-               keyPressed = key.getCode();
+               Controller.respondToKey(key.getCode());
             }
         });
 
@@ -85,13 +85,6 @@ public class BoardDisplay {
 
     }
 
-    /*
-     * Accessor for keyPressed variable for controller
-     * @return: key code
-     */
-    KeyCode getKeyPressed(){
-        return keyPressed;
-    }
 
     /*
      * Draws a tetrimino in the pane using rectangles. We base the position of the rectangles on

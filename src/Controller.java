@@ -2,6 +2,8 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Observer;
+
 public class Controller {
     Stage primary;
     StartGame startView;
@@ -29,8 +31,12 @@ public class Controller {
         startView.startScene(primary, this);
     }
 
+    void respondToKey(KeyCode keyPressed){
+
+    }
+
     void startRound() {
-        mainView.mainScene(primary);
+        mainView.mainScene(primary, this);
 
         while (!endGame()){
             Tetrimino tetrimino = new Tetrimino(board);
