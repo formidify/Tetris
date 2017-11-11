@@ -9,13 +9,12 @@ public class Tetrimino {
 
     String shape;
     int orientation;
-    private int[] center;
+    private int[] center; // Each tetrimino has a particular square called center to better position them.
     private int[][] position;
     double speed;
     private Color color;
     Board mainBoard;
     BoardDisplay boardView;
-    boolean landing; // vs falling
 
     Tetrimino(Board board){
         speed = 1;
@@ -26,39 +25,22 @@ public class Tetrimino {
         color = chooseColor();
         mainBoard = board;
         boardView = board.boardView;
-        landing = false;
-
     }
 
-    private Color chooseColor() {
-        Color tetriminoColor = Color.BLACK;
-        switch (shape) {
-            case "Straight":
-                tetriminoColor = Color.LIGHTBLUE;
-                break;
-            case "Square":
-                tetriminoColor = Color.YELLOW;
-            case "L":
-                tetriminoColor = Color.ORANGE;
-                break;
-            case "J":
-                tetriminoColor = Color.BLUE;
-                break;
-            case "Z":
-                tetriminoColor = Color.GREEN;
-                break;
-            case "S":
-                tetriminoColor = Color.RED;
-                break;
-            case "T":
-                tetriminoColor = Color.PURPLE;
-                break;
-            default:
-                break;
-        }
-        return tetriminoColor;
+    int[] getCenter(){
+        return center;
     }
 
+    private void setCenter(int row, int col){
+        center = new int[] {row, col};
+    }
+
+    private void updateCenter(int row, int col) {
+        setCenter(row, col);
+        updatePosition();
+    }
+
+    // Returns the position of the other squares relative the the center square
     int[][] getRelativePosition() {
         int[][] relativePosition = new int[4][2];
         switch (shape) {
@@ -194,14 +176,6 @@ public class Tetrimino {
         return relativePosition;
     }
 
-    int[] getCenter(){
-        return center;
-    }
-
-    private void setCenter(int row, int col){
-        center = new int[] {row, col};
-    }
-
     int[][] getPosition(){
         return position;
     }
@@ -212,8 +186,9 @@ public class Tetrimino {
             int[] relPos = relativePosition[i];
             position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
         }
-        // Tell view
     }
+
+    // Methods moving the tetrimino
 
     // Update center after change in x and y
     void translate(int deltaRow, int deltaCol){
@@ -250,10 +225,7 @@ public class Tetrimino {
         translate(mainBoard.NUMROW - center[0]-3,0);
     }
 
-    private void updateCenter(int row, int col) {
-        setCenter(row, col);
-        updatePosition();
-    }
+    // Check the status of the tetrimino: falling or landed
 
     boolean landed() {
         for (int[] aPosition : position) {
@@ -269,9 +241,39 @@ public class Tetrimino {
         return false;
     }
 
+
+    // Color related methods
+
     Color getColor() {
         return color;
     }
 
-
+    private Color chooseColor() {
+        Color tetriminoColor = Color.BLACK;
+        switch (shape) {
+            case "Straight":
+                tetriminoColor = Color.LIGHTBLUE;
+                break;
+            case "Square":
+                tetriminoColor = Color.YELLOW;
+            case "L":
+                tetriminoColor = Color.ORANGE;
+                break;
+            case "J":
+                tetriminoColor = Color.BLUE;
+                break;
+            case "Z":
+                tetriminoColor = Color.GREEN;
+                break;
+            case "S":
+                tetriminoColor = Color.RED;
+                break;
+            case "T":
+                tetriminoColor = Color.PURPLE;
+                break;
+            default:
+                break;
+        }
+        return tetriminoColor;
+    }
 }
