@@ -53,7 +53,7 @@ public class Board {
     boolean reachBoardTop() {
         // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
-            if (! board[0][col].isEmpty){
+            if (! board[1][col].isEmpty){
                 return true;
             }
         }

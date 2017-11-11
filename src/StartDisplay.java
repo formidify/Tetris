@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,13 +26,10 @@ public class StartDisplay {
     public static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("TETRIS");
 
-    private Controller controller;
-    private Stage primary;
+    private TetrisController controller;
 
-    void startScene(Stage primaryStage, Controller control) {
-        controller = control;
-        primary = primaryStage;
-
+    void startScene(Stage primaryStage, TetrisController tetrisController) {
+        controller = tetrisController;
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
         Node directionsPane = addText(directions, FontWeight.BOLD, 60);

@@ -2,31 +2,19 @@
  * Created by chens5 on 11/6/17.
  */
 
-import javafx.animation.TranslateTransition;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.shape.*;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.util.Duration;
 
 
 import static javafx.scene.paint.Color.*;
@@ -56,7 +44,7 @@ public class BoardDisplay {
         grid = new Rectangle[GRID_ROWS][GRID_COLS];
    }
 
-    public void mainScene(Stage primaryStage, Controller controller) {
+    public void mainScene(Stage primaryStage, TetrisController tetrisController) {
 
         BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY, BorderWidths.DEFAULT);
@@ -79,7 +67,7 @@ public class BoardDisplay {
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         /*
-         * Updates the controller whenever a key is pressed
+         * Updates the tetrisController whenever a key is pressed
          */
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if((key.getCode()== KeyCode.LEFT) ||
@@ -87,7 +75,7 @@ public class BoardDisplay {
                     (key.getCode() == KeyCode.UP) ||
                     (key.getCode() == KeyCode.DOWN) ||
                     (key.getCode() == KeyCode.SPACE)) {
-               controller.respondToKey(key.getCode());
+               tetrisController.respondToKey(key.getCode());
             }
         });
 

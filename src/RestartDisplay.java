@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -22,12 +21,15 @@ import javafx.stage.Stage;
  */
 
 
-public class ExitOrRestart extends Application {
+public class RestartDisplay {
     public static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("Would you like to start a new game?");
 
-    @Override
-    public void start(Stage primaryStage) {
+    private TetrisController controller;
+
+    void restartScene(Stage primaryStage, TetrisController tetrisController) {
+        controller = tetrisController;
+
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
         Node directionsPane = addText(directions, FontWeight.NORMAL, 14);
@@ -36,8 +38,6 @@ public class ExitOrRestart extends Application {
         root.setCenter(buttonPane);
 
         Scene scene = new Scene(root, 350, 250);
-        primaryStage.setTitle("new game or exit - Tetris");
-        primaryStage.setResizable(false);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -64,6 +64,13 @@ public class ExitOrRestart extends Application {
         newgameView.setFitWidth(60);
         newGame.setGraphic(newgameView);
         newGame.setTooltip(new Tooltip("Start a new game!"));
+
+        newGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.startRound();
+            }
+        });
 
         // create icon for exit button, add popup tooltip
         Image imageExit = new Image(getClass().getResourceAsStream("exit.png"));
@@ -92,10 +99,6 @@ public class ExitOrRestart extends Application {
         text.setFont(Font.font("Chalkduster", fontWeight, fontSize));
         flowPane.getChildren().add(text);
         return flowPane;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
