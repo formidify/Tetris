@@ -90,7 +90,6 @@ public class RestartDisplay {
         return buttonPane;
     }
 
-    // TODO: THIS FUNCTION SHOULD GO SOMEWHERE ELSE! IT'S USEFUL BUT REDUNDANT!
     private Node addText(Text text, FontWeight fontWeight, int fontSize) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);
