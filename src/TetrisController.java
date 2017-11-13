@@ -68,6 +68,7 @@ public class TetrisController {
             }
         };
         timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
+
     }
 
     private void moveTetriminoDown(Tetrimino tetrimino){
@@ -88,11 +89,11 @@ public class TetrisController {
             if (!currTetrimino.landed()) {
                 mainView.undrawTetrimino(currTetrimino);
                 if (keyPressed == KeyCode.LEFT) {
-                    currTetrimino.translate(0, -1);
+                    currTetrimino.newTranslateLeft();
                 } else if (keyPressed == KeyCode.RIGHT) {
-                    currTetrimino.translate(0, 1);
+                    currTetrimino.newTranslateRight();
                 } else if (keyPressed == KeyCode.DOWN) {
-                    currTetrimino.translate(1, 0);
+                    currTetrimino.newTranslateDown();
                 } else if (keyPressed == KeyCode.UP) {
                     currTetrimino.rotate();
                 } else if (keyPressed == KeyCode.SPACE) {

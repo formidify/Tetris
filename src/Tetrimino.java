@@ -20,9 +20,9 @@ public class Tetrimino {
     Tetrimino(Board board){
         speed = 1;
         shape = shapes[new Random().nextInt(7)];
-        orientation = orientations[new Random().nextInt(4)];
-        center = new int[] {1,5};
+        orientation = 0;
         position = new int[4][2];
+        setPosition();
         color = chooseColor();
         mainBoard = board;
         boardView = board.boardView;
@@ -192,6 +192,7 @@ public class Tetrimino {
                 break;
         }
         return relativePosition;
+
     }
 
     int[] getCenter(){
@@ -206,14 +207,14 @@ public class Tetrimino {
         return position;
     }
 
-    private void updatePosition() {
-        int[][] relativePosition = getRelativePosition();
-        for (int i = 0; i < 4; i++){
-            int[] relPos = relativePosition[i];
-            position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
+    private void setPosition(){
+        for(int i = 0; i < position.length; i++)
+        {
+            position[i][0] = getRelativePosition()[i][0] + 1;
+            position[i][1] = getRelativePosition()[i][1] + 5;
         }
-        // Tell view
     }
+
 
     // Update center after change in x and y
     void translate(int deltaRow, int deltaCol){
@@ -223,9 +224,10 @@ public class Tetrimino {
         // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
         if (col < 1){
             col = 1;
-        } else if (col > mainBoard.NUMCOLUMN - 2) {
-            col = mainBoard.NUMCOLUMN - 2;
+        } else if (col > Board.NUMCOLUMN - 2) {
+            col = Board.NUMCOLUMN - 2;
         }
+
         // translating vertically
         int row = center[0];
         for (int i = 0; i < deltaRow; i++) {
@@ -234,32 +236,81 @@ public class Tetrimino {
             }
 
         }
-        updateCenter(row, col);
+    }
+
+    /*
+     * Shifting to right based on the position
+     */
+    boolean newTranslateRight()
+    {
+        //shifting to right
+        for(int i = 0; i < 4; i++) {
+            if (!checkValid(position[i][0], 1+position[i][1])) {
+                return false;
+            }
+            position[i][1]++;
+        }
+        return true;
+    }
+
+    boolean newTranslateLeft()
+    {
+        //shifting to right
+        for(int i = 0; i < 4; i++) {
+            if (!checkValid(position[i][0], 1+position[i][1])) {
+                return false;
+            }
+            position[i][1]--;
+        }
+        return true;
+    }
+
+    void newTranslateDown()
+    {
+        for(int i = 0; i < 4; i++) {
+            if (checkValid(position)) {
+                position[i][0]++;
+            }
+        }
+    }
+
+    boolean  checkValid(int[][] posArray)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if(posArray[i][0] < 0 || posArray[i][0] > 23 || posArray[i][1] <0 || posArray[i][1] > 11){
+                return false;
+            }
+            if (!mainBoard[posArray[i][0]][posArray[i][1]].isEmpty){
+                return false;
+            }
+        }
+        return true;
     }
 
     void rotate(){
         orientation = (orientation + 1) % 4;
     }
 
+    void oldFallByOne(){translate(0, 1);}
+
     void fallByOneSquare() {
-        translate(1, 0);
+        newTranslateDown();
     }
 
     void fallToBottom() {
         // TODO: add in a private var that tracks the bottom most row and replace center[0] with it
-        translate(mainBoard.NUMROW - center[0]-3,0);
+        translate(Board.NUMROW - center[0]-3,0);
     }
 
-    private void updateCenter(int row, int col) {
-        setCenter(row, col);
-        updatePosition();
-    }
-
+    /*
+     * TODO: Fix landing because it doesn't work for most tetriminos
+     */
     boolean landed() {
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
-            if (row == mainBoard.NUMROW - 2) {
+            if (row == Board.NUMROW - 2) {
                 return true;
             }
             if (!mainBoard.board[row + 1][col].isEmpty){
