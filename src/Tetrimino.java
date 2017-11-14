@@ -224,37 +224,39 @@ public class Tetrimino {
     /*
      * Shifting to right based on the position
      */
-    void newTranslateRight()
-    {
-        System.out.println("newTranslateRight called");
-        //System.out.println("position: " + Arrays.toString(position[0]) + " " + Arrays.toString(position[1]));
-        int[][] tempArray = position;
+    void newTranslateRight() {
+        // instantiate a new array for new coordinates responding to right key
+        int[][] tempArray = new int[4][2];
+        for (int i = 0; i < 4; i++) {
+            tempArray[i][0] = position[i][0];
+            tempArray[i][1] = position[i][1]+1;
+        }
 
         for (int i = 0; i < 4; i++) {
-            tempArray[i][1]++;
-            System.out.println(checkValid(tempArray[i][0], tempArray[i][1]));
             if (!checkValid(tempArray[i][0], tempArray[i][1])) {
                 return;
             }
         }
-        center[1]++;
         position = tempArray;
     }
 
+    /*
+     * Shifting to left based on the position
+     */
     void newTranslateLeft() {
-
-        System.out.println("newTranslateLeft ");
-        int[][] tempArray = position;
+        // instantiate a new array for new coordinates responding to left key
+        int[][] tempArray = new int[4][2];
+        for (int i = 0; i < 4; i++) {
+            tempArray[i][0] = position[i][0];
+            tempArray[i][1] = position[i][1]-1;
+        }
 
         for (int i = 0; i < 4; i++) {
-            tempArray[i][1]--;
-            //System.out.println(tempArray[i][0] + " "+ tempArray[i][1]);
             if (!checkValid(tempArray[i][0], tempArray[i][1])) {
-                System.out.println(tempArray[i][0] +  " " + tempArray[i][1]);
+                //System.out.println(position[i][0] +  " " + position[i][1]);
                 return;
             }
         }
-        center[1]--;
         position = tempArray;
     }
 
