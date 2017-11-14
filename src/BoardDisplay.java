@@ -110,7 +110,7 @@ public class BoardDisplay {
      * @param: tetrimino to clear
      */
     void undrawTetrimino(Tetrimino tetrimino) {
-        int [][] position = tetrimino.getPosition();
+        int[][] position = tetrimino.getPosition();
         for (int i=0; i < 4; i++){
             int row = position[i][0];
             int col = position[i][1];

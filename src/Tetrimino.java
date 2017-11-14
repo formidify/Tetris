@@ -261,15 +261,17 @@ public class Tetrimino {
     }
 
     void newTranslateDown() {
-        int[][] tempArray = position;
-        System.out.println("newTranslateDown called");
+        // instantiate a new array for new coordinates responding to left key
+        int[][] tempArray = new int[4][2];
         for (int i = 0; i < 4; i++) {
-            tempArray[i][0]++;
+            tempArray[i][0] = position[i][0]+1;
+            tempArray[i][1] = position[i][1];
+        }
+        for (int i = 0; i < 4; i++) {
             if (!checkValid(tempArray[i][0], tempArray[i][1])) {
                 return;
             }
         }
-        center[0]++;
         position = tempArray;
     }
 
@@ -277,13 +279,10 @@ public class Tetrimino {
         if (x < 0 || x > 23 || y < 0 || y > 11) {
             return false;
         }
-
         if (!mainBoard.board[x][y].isEmpty) {
             return false;
         }
-
         return true;
-
     }
 
     /*
@@ -357,6 +356,5 @@ public class Tetrimino {
     Color getColor() {
         return color;
     }
-
 
 }

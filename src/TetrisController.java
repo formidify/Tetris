@@ -63,8 +63,7 @@ public class TetrisController {
                                 // testing destroying rows by trying to destroy the last row
                                 //note that to do this, I set the tetrimino to be the straight state
                                 System.out.println(board.rowIsFull(23));
-                                if(board.rowIsFull(23))
-                                {
+                                if (board.rowIsFull(23)) {
                                     mainView.clearLine(23);
                                     mainView.moveRow(23);
                                 }
