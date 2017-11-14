@@ -1,5 +1,6 @@
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Tetrimino {
@@ -19,8 +20,9 @@ public class Tetrimino {
 
     Tetrimino(Board board){
         speed = 1;
-        shape = shapes[new Random().nextInt(7)];
+        shape = shapes[0];
         orientation = 0;
+        center = new int[] {1,5};
         position = new int[4][2];
         setPosition();
         color = chooseColor();
@@ -161,7 +163,7 @@ public class Tetrimino {
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
                         break;
                     case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,1}};
+                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,-1}};
                         break;
                     case 3:
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
@@ -207,11 +209,103 @@ public class Tetrimino {
         return position;
     }
 
+    /*
+     * setting position in the beginning
+     */
     private void setPosition(){
         for(int i = 0; i < position.length; i++)
         {
             position[i][0] = getRelativePosition()[i][0] + 1;
             position[i][1] = getRelativePosition()[i][1] + 5;
+        }
+    }
+
+
+    /*
+     * Shifting to right based on the position
+     */
+    void newTranslateRight()
+    {
+        System.out.println("newTranslateRight called");
+        //System.out.println("position: " + Arrays.toString(position[0]) + " " + Arrays.toString(position[1]));
+        int[][] tempArray = position;
+
+        for (int i = 0; i < 4; i++) {
+            tempArray[i][1]++;
+            System.out.println(checkValid(tempArray[i][0], tempArray[i][1]));
+            if (!checkValid(tempArray[i][0], tempArray[i][1])) {
+                return;
+            }
+        }
+        center[1]++;
+        position = tempArray;
+    }
+
+    void newTranslateLeft() {
+
+        System.out.println("newTranslateLeft ");
+        int[][] tempArray = position;
+
+        for (int i = 0; i < 4; i++) {
+            tempArray[i][1]--;
+            //System.out.println(tempArray[i][0] + " "+ tempArray[i][1]);
+            if (!checkValid(tempArray[i][0], tempArray[i][1])) {
+                System.out.println(tempArray[i][0] +  " " + tempArray[i][1]);
+                return;
+            }
+        }
+        center[1]--;
+        position = tempArray;
+    }
+
+    void newTranslateDown() {
+        int[][] tempArray = position;
+        System.out.println("newTranslateDown called");
+        for (int i = 0; i < 4; i++) {
+            tempArray[i][0]++;
+            if (!checkValid(tempArray[i][0], tempArray[i][1])) {
+                return;
+            }
+        }
+        center[0]++;
+        position = tempArray;
+    }
+
+    boolean checkValid(int x, int y) {
+        if (x < 0 || x > 23 || y < 0 || y > 11) {
+            return false;
+        }
+
+        if (!mainBoard.board[x][y].isEmpty) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /*
+     * fixed automatic fall to bottom with space button
+     */
+    void fallToBottom() {
+        while (!landed()) {
+            newTranslateDown();
+        }
+    }
+
+    /*
+     * rotation works for all tetriminos.
+     */
+    void rotate(){
+        orientation = (orientation + 1) % 4;
+        updatePosition();
+    }
+
+    private void updatePosition() {
+        int[][] relativePosition = getRelativePosition();
+        for (int i = 0; i < 4; i++){
+            int[] relPos = relativePosition[i];
+            position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
         }
     }
 
@@ -238,79 +332,17 @@ public class Tetrimino {
         }
     }
 
-    /*
-     * Shifting to right based on the position
-     */
-    boolean newTranslateRight()
-    {
-        //shifting to right
-        for(int i = 0; i < 4; i++) {
-            if (!checkValid(position[i][0], 1+position[i][1])) {
-                return false;
-            }
-            position[i][1]++;
-        }
-        return true;
-    }
 
-    boolean newTranslateLeft()
-    {
-        //shifting to right
-        for(int i = 0; i < 4; i++) {
-            if (!checkValid(position[i][0], 1+position[i][1])) {
-                return false;
-            }
-            position[i][1]--;
-        }
-        return true;
-    }
-
-    void newTranslateDown()
-    {
-        for(int i = 0; i < 4; i++) {
-            if (checkValid(position)) {
-                position[i][0]++;
-            }
-        }
-    }
-
-    boolean  checkValid(int[][] posArray)
-    {
-        for(int i = 0; i < 4; i++)
-        {
-            if(posArray[i][0] < 0 || posArray[i][0] > 23 || posArray[i][1] <0 || posArray[i][1] > 11){
-                return false;
-            }
-            if (!mainBoard[posArray[i][0]][posArray[i][1]].isEmpty){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    void rotate(){
-        orientation = (orientation + 1) % 4;
-    }
-
-    void oldFallByOne(){translate(0, 1);}
-
-    void fallByOneSquare() {
-        newTranslateDown();
-    }
-
-    void fallToBottom() {
-        // TODO: add in a private var that tracks the bottom most row and replace center[0] with it
-        translate(Board.NUMROW - center[0]-3,0);
-    }
 
     /*
      * TODO: Fix landing because it doesn't work for most tetriminos
      */
     boolean landed() {
+        System.out.println("landed called");
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
-            if (row == Board.NUMROW - 2) {
+            if (row == Board.NUMROW - 1) {
                 return true;
             }
             if (!mainBoard.board[row + 1][col].isEmpty){
