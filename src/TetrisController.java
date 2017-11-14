@@ -52,24 +52,15 @@ public class TetrisController {
                 Platform.runLater(new Runnable() {
                     public void run() {
                         if (!checkEndGame()) {
+                            // TODO JUST FOR TESTING RN
+                            System.out.println(board.rowIsFull(23));
+                            if (board.rowIsFull(23)) {destroyRows();}
                             if (!currTetrimino.landed()) {
                                 moveTetriminoDown(currTetrimino);
                                 //System.out.println("falling");
                                 // check full rows
                                 mainView.updateScore(40);
-                            }
-                            else {
-                                //System.out.println("landing");
-                                // testing destroying rows by trying to destroy the last row
-                                //note that to do this, I set the tetrimino to be the straight state
-                                System.out.println(board.rowIsFull(23));
-                                if (board.rowIsFull(23)) {
-                                    mainView.clearLine(23);
-                                    mainView.moveRow(23);
-                                }
-                                //destroyRows();
-                                changeToNextTetrimino();
-                            }
+                            } else { changeToNextTetrimino(); }
                         }
                         else {
                             cancel();
@@ -85,15 +76,19 @@ public class TetrisController {
     private void destroyRows(){
 
         List<Integer> listOfFullRows = board.fullRows();
-        for(int i = 0; i < listOfFullRows.size(); i++)
-        {
+
+        for(int i = 0; i < listOfFullRows.size(); i++) {
+            System.out.println(listOfFullRows.get(i));
             mainView.clearLine(listOfFullRows.get(i));
         }
-
-        for (int j = listOfFullRows.size()-1; j >= 0; j--) {
-            board.moveRowsDown(listOfFullRows.get(j));
-            mainView.moveRow(listOfFullRows.get(j));
+        for(int i = listOfFullRows.size()-1; i >= 0; i--) {
+            mainView.moveRow(listOfFullRows.get(i));
         }
+
+//        for (int j = listOfFullRows.size()-1; j >= 0; j--) {
+//            board.moveRowsDown(listOfFullRows.get(j));
+//            mainView.moveRow(listOfFullRows.get(j));
+//        }
     }
 
     private void moveTetriminoDown(Tetrimino tetrimino){

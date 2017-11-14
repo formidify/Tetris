@@ -56,9 +56,9 @@ public class Board {
 
     //clears the board row so we don't run into any errors with checking the validity of a space in the grid
     private void clearRow(int rowIndex){
-        for(int i = 0; i < board[rowIndex].length; i++)
-        {
-            board[rowIndex][i] = null;
+        for(int i = 0; i < board[rowIndex].length; i++) {
+            //board[rowIndex][i] = null;
+            board[rowIndex][i] = new Square();
         }
     }
 
