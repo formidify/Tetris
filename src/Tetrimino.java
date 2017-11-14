@@ -237,7 +237,9 @@ public class Tetrimino {
                 return;
             }
         }
-        center[1]++;
+        if (center[1] < 9){
+            center[1]++;
+        }
         position = tempArray;
     }
 
@@ -258,7 +260,9 @@ public class Tetrimino {
                 return;
             }
         }
-        center[1]--;
+        if (center[1] > 1){
+            center[1]--;
+        }
         position = tempArray;
     }
 
@@ -342,7 +346,6 @@ public class Tetrimino {
      * TODO: Fix landing because it doesn't work for most tetriminos
      */
     boolean landed() {
-        System.out.println("landed called");
         for (int[] aPosition : position) {
             int row = aPosition[0];
             int col = aPosition[1];
