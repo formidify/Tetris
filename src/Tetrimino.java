@@ -237,6 +237,7 @@ public class Tetrimino {
                 return;
             }
         }
+        center[1]++;
         position = tempArray;
     }
 
@@ -257,6 +258,7 @@ public class Tetrimino {
                 return;
             }
         }
+        center[1]--;
         position = tempArray;
     }
 
@@ -272,6 +274,7 @@ public class Tetrimino {
                 return;
             }
         }
+        center[0]++;
         position = tempArray;
     }
 
