@@ -57,6 +57,13 @@ public class RestartDisplay {
         buttonPane.add(newGame, 0, 0);
         buttonPane.add(exit, 2, 0);
 
+        newGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.startRound();
+            }
+        });
+
         // create icon for new game button, add popup tooltip
         Image imageNewG = new Image(getClass().getResourceAsStream("newGame.png"));
         ImageView newgameView = new ImageView(imageNewG);
@@ -65,12 +72,6 @@ public class RestartDisplay {
         newGame.setGraphic(newgameView);
         newGame.setTooltip(new Tooltip("Start a new game!"));
 
-        newGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                controller.startRound();
-            }
-        });
 
         // create icon for exit button, add popup tooltip
         Image imageExit = new Image(getClass().getResourceAsStream("exit.png"));

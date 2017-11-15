@@ -126,8 +126,10 @@ public class BoardDisplay {
      void clearLine(int row){
         for (int col =0; col <grid[0].length; col ++){
             if(grid[row][col] != null){
-            gameGrid.getChildren().remove(grid[row][col]);}
+                gameGrid.getChildren().remove(grid[row][col]);
+            }
         }
+        System.out.println("Just cleared: " + row);
     }
 
     /*
@@ -139,13 +141,15 @@ public class BoardDisplay {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] != null) {
                     grid[i+1][j] = grid[i][j];
-                    root.getChildren().remove(grid[i][j]);
+                    gameGrid.getChildren().remove(grid[i][j]);
                     grid[i][j] = null;
                     grid[i+1][j].setY(grid[i+1][j].getY() + 25);
                     gameGrid.getChildren().add(grid[i+1][j]);
                 }
             }
         }
+
+        System.out.println("Moved " + row + " to " + (row + 1));
     }
 
     /*

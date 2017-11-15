@@ -53,8 +53,9 @@ public class TetrisController {
                     public void run() {
                         if (!checkEndGame()) {
                             // TODO JUST FOR TESTING RN
-                            System.out.println(board.rowIsFull(23));
-                            if (board.rowIsFull(23)) {destroyRows();}
+                            //System.out.println(board.rowIsFull(23));
+                            destroyRows();
+                            //if (board.rowIsFull(23)) {destroyRows();}
                             if (!currTetrimino.landed()) {
                                 moveTetriminoDown(currTetrimino);
                                 //System.out.println("falling");
@@ -70,7 +71,7 @@ public class TetrisController {
                 });
             }
         };
-        timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
+        timer.schedule(timerTask, 3000, (long) (800 / currTetrimino.speed));
     }
 
     private void destroyRows(){
@@ -78,17 +79,14 @@ public class TetrisController {
         List<Integer> listOfFullRows = board.fullRows();
 
         for(int i = 0; i < listOfFullRows.size(); i++) {
-            System.out.println(listOfFullRows.get(i));
+            //System.out.println(listOfFullRows.get(i));
             mainView.clearLine(listOfFullRows.get(i));
         }
+
         for(int i = listOfFullRows.size()-1; i >= 0; i--) {
             mainView.moveRow(listOfFullRows.get(i));
         }
 
-//        for (int j = listOfFullRows.size()-1; j >= 0; j--) {
-//            board.moveRowsDown(listOfFullRows.get(j));
-//            mainView.moveRow(listOfFullRows.get(j));
-//        }
     }
 
     private void moveTetriminoDown(Tetrimino tetrimino){
