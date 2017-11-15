@@ -77,16 +77,16 @@ public class TetrisController {
     private void destroyRows(){
 
         List<Integer> listOfFullRows = board.fullRows();
+        //System.out.println("------------full rows:  -------------");
 
         for(int i = 0; i < listOfFullRows.size(); i++) {
             //System.out.println(listOfFullRows.get(i));
             mainView.clearLine(listOfFullRows.get(i));
         }
 
-//        for(int i = listOfFullRows.size()-1; i >= 0; i--) {
-        for(int row  = listOfFullRows.size() - 1; row >= 0; row--) {
-
-            mainView.moveRow(listOfFullRows.get(row));
+//        for(int j = listOfFullRows.size() - 1; j >= 0; j--) {
+        for(int j : listOfFullRows) {
+            mainView.moveRow(j);
         }
 
     }

@@ -124,13 +124,14 @@ public class BoardDisplay {
      * @param: row to clear
      */
      void clearLine(int row){
-        for (int col =0; col <grid[0].length; col ++){
-            if(grid[row][col] != null){
-                gameGrid.getChildren().remove(grid[row][col]);
-            }
-        }
-        System.out.println("Just cleared: " + row);
-    }
+         for (int col = 0; col < GRID_COLS; col++){
+             if(grid[row][col] != null){
+                 gameGrid.getChildren().remove(grid[row][col]);
+                 grid[row][col] = null;
+             }
+         }
+         //System.out.println("Just cleared: " + row);
+     }
 
     /*
      * Moves a row above given parameter down in the board
@@ -139,13 +140,24 @@ public class BoardDisplay {
      */
     void moveRow(int row) {
         for (int i = row - 1; i >= 0; i--) {
-            for (int j = 0; j < grid[0].length; j++) {
+            for (int j = 0; j < GRID_COLS; j++) {
                 if (grid[i][j] != null) {
+                    //System.out.print((i+1) + " " + j + " is cleared: ");
+                    //System.out.println(grid[i+1][j] == null);
+
+                    if (grid[i+1][j] != null){
+                        grid[i+1][j] = null;
+                        gameGrid.getChildren().remove(grid[i+1][j]);
+                    }
+
                     grid[i+1][j] = grid[i][j];
                     gameGrid.getChildren().remove(grid[i][j]);
                     grid[i][j] = null;
                     grid[i+1][j].setY(grid[i+1][j].getY() + 25);
                     gameGrid.getChildren().add(grid[i+1][j]);
+                    //System.out.println(grid[i+1][j]);
+                    //System.out.println(grid[i][j]);
+                    //System.out.println("=============");
                 }
             }
         }
