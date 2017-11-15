@@ -83,8 +83,10 @@ public class TetrisController {
             mainView.clearLine(listOfFullRows.get(i));
         }
 
-        for(int i = listOfFullRows.size()-1; i >= 0; i--) {
-            mainView.moveRow(listOfFullRows.get(i));
+//        for(int i = listOfFullRows.size()-1; i >= 0; i--) {
+        for(int row  = listOfFullRows.size() - 1; row >= 0; row--) {
+
+            mainView.moveRow(listOfFullRows.get(row));
         }
 
     }

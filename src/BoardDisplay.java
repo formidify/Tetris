@@ -133,7 +133,8 @@ public class BoardDisplay {
     }
 
     /*
-     * Moves a row down in the board
+     * Moves a row above given parameter down in the board
+     * TODO: DISPLAY IS NOT UPDATING THE NEW ROWS MOVED DOWN CORRECTLY
      * @param: row to move down
      */
     void moveRow(int row) {
@@ -149,7 +150,7 @@ public class BoardDisplay {
             }
         }
 
-        System.out.println("Moved " + row + " to " + (row + 1));
+
     }
 
     /*
