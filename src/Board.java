@@ -48,7 +48,7 @@ public class Board {
                 fullRows.add(row);
                 clearRow(row);
                 moveRowsDown(row);
-                System.out.println("Destroyed row: " + row);
+                //System.out.println("Destroyed row: " + row);
             }
         }
         return fullRows;

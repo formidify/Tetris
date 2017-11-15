@@ -54,14 +54,18 @@ public class TetrisController {
                         if (!checkEndGame()) {
                             // TODO JUST FOR TESTING RN
                             //System.out.println(board.rowIsFull(23));
-                            destroyRows();
+
                             //if (board.rowIsFull(23)) {destroyRows();}
                             if (!currTetrimino.landed()) {
                                 moveTetriminoDown(currTetrimino);
                                 //System.out.println("falling");
                                 // check full rows
                                 mainView.updateScore(40);
-                            } else { changeToNextTetrimino(); }
+                            } else {
+                                board.putTetrimino(currTetrimino);
+                                destroyRows();
+                                changeToNextTetrimino();
+                            }
                         }
                         else {
                             cancel();
@@ -71,7 +75,7 @@ public class TetrisController {
                 });
             }
         };
-        timer.schedule(timerTask, 3000, (long) (800 / currTetrimino.speed));
+        timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
     }
 
     private void destroyRows(){
@@ -98,7 +102,8 @@ public class TetrisController {
     }
 
     private void changeToNextTetrimino() {
-        board.putTetrimino(currTetrimino);
+
+
         currTetrimino = nextTetrimino;
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);

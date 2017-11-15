@@ -20,7 +20,7 @@ public class Tetrimino {
 
     Tetrimino(Board board){
         speed = 1;
-        shape = shapes[0];
+        shape = shapes[new Random().nextInt(7)];
         orientation = 0;
         center = new int[] {1,5};
         position = new int[4][2];
