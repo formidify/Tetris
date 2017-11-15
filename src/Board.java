@@ -40,20 +40,46 @@ public class Board {
         return true;
     }
 
+
     List<Integer> fullRows(){
         List<Integer> fullRows = new ArrayList<Integer>();
         for (int row = 0; row < NUMROW; row++){
             if (rowIsFull(row)){
                 fullRows.add(row);
+                clearRow(row);
+                moveRowsDown(row);
+                //System.out.println("Destroyed row: " + row);
             }
         }
         return fullRows;
     }
 
+    //We need to see that a row is full
+    //add it to a list of full rows to pass to the controller
+    //clear the row on the board so it's empty
+    //move all above rows down
+
+    //clears the board row so we don't run into any errors with checking the validity of a space in the grid
+    private void clearRow(int rowIndex){
+        for(int i = 0; i < board[rowIndex].length; i++) {
+            board[rowIndex][i] = new Square();
+        }
+    }
+
+    //Move everything above row down
+    private void moveRowsDown(int row){
+        for (int i = row - 1; i >= 0; i--){
+            for(int j = 0; j < NUMCOLUMN; j++){
+                board[i + 1][j] = board[i][j];
+            }
+        }
+
+    }
+
     boolean reachBoardTop() {
         // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
-            if (! board[1][col].isEmpty){
+            if (! board[0][col].isEmpty){
                 return true;
             }
         }

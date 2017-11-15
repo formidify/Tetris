@@ -2,6 +2,8 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,16 +52,22 @@ public class TetrisController {
                 Platform.runLater(new Runnable() {
                     public void run() {
                         if (!checkEndGame()) {
+                            // TODO JUST FOR TESTING RN
+                            //System.out.println(board.rowIsFull(23));
+
+                            //if (board.rowIsFull(23)) {destroyRows();}
                             if (!currTetrimino.landed()) {
                                 moveTetriminoDown(currTetrimino);
                                 //System.out.println("falling");
                                 // check full rows
                                 mainView.updateScore(40);
                             } else {
-                                //System.out.println("landing");
+                                board.putTetrimino(currTetrimino);
+                                destroyRows();
                                 changeToNextTetrimino();
                             }
-                        } else {
+                        }
+                        else {
                             cancel();
                             endGame();
                         }
@@ -70,14 +78,32 @@ public class TetrisController {
         timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
     }
 
+    private void destroyRows(){
+
+        List<Integer> listOfFullRows = board.fullRows();
+        //System.out.println("------------full rows:  -------------");
+
+        for(int i = 0; i < listOfFullRows.size(); i++) {
+            //System.out.println(listOfFullRows.get(i));
+            mainView.clearLine(listOfFullRows.get(i));
+        }
+
+//        for(int j = listOfFullRows.size() - 1; j >= 0; j--) {
+        for(int j : listOfFullRows) {
+            mainView.moveRow(j);
+        }
+
+    }
+
     private void moveTetriminoDown(Tetrimino tetrimino){
         mainView.undrawTetrimino(tetrimino);
-        tetrimino.fallByOneSquare();
+        tetrimino.newTranslateDown();
         mainView.drawTetrimino(tetrimino);
     }
 
     private void changeToNextTetrimino() {
-        board.putTetrimino(currTetrimino);
+
+
         currTetrimino = nextTetrimino;
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
@@ -88,11 +114,11 @@ public class TetrisController {
             if (!currTetrimino.landed()) {
                 mainView.undrawTetrimino(currTetrimino);
                 if (keyPressed == KeyCode.LEFT) {
-                    currTetrimino.translate(0, -1);
+                    currTetrimino.newTranslateLeft();
                 } else if (keyPressed == KeyCode.RIGHT) {
-                    currTetrimino.translate(0, 1);
+                    currTetrimino.newTranslateRight();
                 } else if (keyPressed == KeyCode.DOWN) {
-                    currTetrimino.translate(1, 0);
+                    currTetrimino.newTranslateDown();
                 } else if (keyPressed == KeyCode.UP) {
                     currTetrimino.rotate();
                 } else if (keyPressed == KeyCode.SPACE) {
