@@ -46,16 +46,35 @@ public class TetrisController {
         currTetrimino = new Tetrimino(board);
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
+<<<<<<< HEAD
         board.putTetrimino(currTetrimino);
+=======
+
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
         Timer timer = new java.util.Timer();
         TimerTask timerTask = new java.util.TimerTask() {
             public void run() {
+
                 Platform.runLater(new Runnable() {
+
                     public void run() {
                         if (!checkEndGame()) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
                             if (!currTetrimino.landed()) {
+
                                 moveTetriminoDown(currTetrimino);
+<<<<<<< HEAD
                             } else {
+=======
+                                mainView.updateScore(40);
+
+                            } else {
+
+                                board.putTetrimino(currTetrimino);
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
                                 destroyRows();
                                 changeToNextTetrimino();
                             }
@@ -68,23 +87,34 @@ public class TetrisController {
                 });
             }
         };
+<<<<<<< HEAD
         timer.schedule(timerTask, 1000, (long) (1000 / currTetrimino.speed));
+=======
+
+        timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
     }
 
+
+    /*
+     * Destroys the full rows in the board and moves un-full rows down the board accordingly
+     */
     private void destroyRows(){
 
         List<Integer> listOfFullRows = board.fullRows();
-        //System.out.println("------------full rows:  -------------");
 
         for(int i = 0; i < listOfFullRows.size(); i++) {
-            //System.out.println(listOfFullRows.get(i));
             mainView.clearLine(listOfFullRows.get(i));
         }
+<<<<<<< HEAD
         //update board score, defaults to 10 per line for now
         if (listOfFullRows.size()>0) {
             mainView.updateScore(10 * listOfFullRows.size());
         }
 //        for(int j = listOfFullRows.size() - 1; j >= 0; j--) {
+=======
+
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
         for(int j : listOfFullRows) {
             mainView.moveRow(j);
         }
@@ -106,6 +136,9 @@ public class TetrisController {
         board.putTetrimino(currTetrimino);
     }
 
+    /*
+     * Responds to key presses
+     */
     void respondToKey(KeyCode keyPressed){
         if (currTetrimino != null){
             if (!currTetrimino.landed()) {

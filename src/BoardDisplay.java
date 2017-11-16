@@ -23,12 +23,11 @@ public class BoardDisplay {
 
     private static final double SCENE_WIDTH = 700;
     private static final double SCENE_HEIGHT = 800;
-    private static final double BOARD_WIDTH = 300;
-    private static final double BOARD_HEIGHT = 600;
-    private static final double NEXTTETRIMINO_WIDTH = 50;
-    private static final double NEXTTETRIMINO_HEIGHT = 50;
-    private static final int GRID_ROWS = 24;
-    private static final int GRID_COLS = 12;
+    private static final int TETRIMINO_DIM = 25;
+    private static final double NEXTTETRIMINO_DIM = 50;
+    private static final double BOARD_WIDTH = TETRIMINO_DIM * Board.NUMCOLUMN;
+    private static final double BOARD_HEIGHT = TETRIMINO_DIM * Board.NUMROW;
+
     BorderPane root;
     Pane gameGrid;
     BorderPane score;
@@ -37,16 +36,23 @@ public class BoardDisplay {
     int currentScore;
 
 
-    public BoardDisplay(){
+
+    public void mainScene(Stage primaryStage, TetrisController tetrisController) {
+
+        //necessary to instantiate all these variables here because otherwise when
+        //restart function is called, the old root and score and never cleared
         root = new BorderPane();
         score = new BorderPane();
         nextTetrimino = new BorderPane();
         gameGrid = new Pane();
+<<<<<<< HEAD
         grid = new Rectangle[GRID_ROWS][GRID_COLS];
         currentScore = 0;
    }
+=======
+        grid = new Rectangle[Board.NUMROW][Board.NUMCOLUMN];
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
 
-    public void mainScene(Stage primaryStage, TetrisController tetrisController) {
 
         BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY, BorderWidths.DEFAULT);
@@ -98,9 +104,9 @@ public class BoardDisplay {
         for (int i=0; i < position.length; i++){
             int row = position[i][0];
             int col = position[i][1];
-            int x = 25* col;
-            int y = 25* row;
-            grid[row][col] = new Rectangle(x, y, 25, 25);
+            int x = TETRIMINO_DIM * col;
+            int y = TETRIMINO_DIM * row;
+            grid[row][col] = new Rectangle(x, y, TETRIMINO_DIM, TETRIMINO_DIM);
             grid[row][col].setFill(tetrimino.getColor());
             grid[row][col].setStroke(BLACK);
             gameGrid.getChildren().add(grid[row][col]);
@@ -126,26 +132,22 @@ public class BoardDisplay {
      * @param: row to clear
      */
      void clearLine(int row){
-         for (int col = 0; col < GRID_COLS; col++){
+         for (int col = 0; col < Board.NUMCOLUMN; col++){
              if(grid[row][col] != null){
                  gameGrid.getChildren().remove(grid[row][col]);
                  grid[row][col] = null;
              }
          }
-         //System.out.println("Just cleared: " + row);
      }
 
     /*
      * Moves a row above given parameter down in the board
-     * TODO: DISPLAY IS NOT UPDATING THE NEW ROWS MOVED DOWN CORRECTLY
      * @param: row to move down
      */
     void moveRow(int row) {
         for (int i = row - 1; i >= 0; i--) {
-            for (int j = 0; j < GRID_COLS; j++) {
+            for (int j = 0; j < Board.NUMCOLUMN; j++) {
                 if (grid[i][j] != null) {
-                    //System.out.print((i+1) + " " + j + " is cleared: ");
-                    //System.out.println(grid[i+1][j] == null);
 
                     if (grid[i+1][j] != null){
                         grid[i+1][j] = null;
@@ -157,9 +159,7 @@ public class BoardDisplay {
                     grid[i][j] = null;
                     grid[i+1][j].setY(grid[i+1][j].getY() + 25);
                     gameGrid.getChildren().add(grid[i+1][j]);
-                    //System.out.println(grid[i+1][j]);
-                    //System.out.println(grid[i][j]);
-                    //System.out.println("=============");
+
                 }
             }
         }
@@ -199,8 +199,8 @@ public class BoardDisplay {
         tetriminoBox.setTop(title);
 
         Pane next = new Pane();
-        next.setMaxSize(NEXTTETRIMINO_WIDTH, NEXTTETRIMINO_HEIGHT);
-        next.setMinSize(NEXTTETRIMINO_WIDTH, NEXTTETRIMINO_HEIGHT);
+        next.setMaxSize(NEXTTETRIMINO_DIM, NEXTTETRIMINO_DIM);
+        next.setMinSize(NEXTTETRIMINO_DIM, NEXTTETRIMINO_DIM);
         tetriminoBox.setCenter(next);
 
         return tetriminoBox;
@@ -227,16 +227,20 @@ public class BoardDisplay {
      * @param: a tetrimino object
      */
     void updateNextTetrimino(Tetrimino tetrimino){
-        //Test purpose:
-        // int [][] coord = {{-1,-1}, {-1,0}, {0,0}, {1,0}};
+
         int[][] coord = tetrimino.getRelativePosition();
         Pane next = (Pane) nextTetrimino.getChildren().get(1);
         if (!next.getChildren().isEmpty()){
             next.getChildren().clear();
         }
 
+<<<<<<< HEAD
         for (int i = 0; i < coord.length; i++){
             int blockSize = (int) NEXTTETRIMINO_HEIGHT / 2;
+=======
+        for (int i = 0; i < 4; i++){
+            int blockSize = (int) NEXTTETRIMINO_DIM / 2;
+>>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
             int x = blockSize * (1 + coord[i][1]);
             int y = blockSize * (1 + coord[i][0]);
             Rectangle rec = new Rectangle(x, y, blockSize, blockSize);
