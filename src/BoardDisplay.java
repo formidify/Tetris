@@ -45,13 +45,9 @@ public class BoardDisplay {
         score = new BorderPane();
         nextTetrimino = new BorderPane();
         gameGrid = new Pane();
-<<<<<<< HEAD
-        grid = new Rectangle[GRID_ROWS][GRID_COLS];
         currentScore = 0;
-   }
-=======
         grid = new Rectangle[Board.NUMROW][Board.NUMCOLUMN];
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
+
 
 
         BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
@@ -234,13 +230,10 @@ public class BoardDisplay {
             next.getChildren().clear();
         }
 
-<<<<<<< HEAD
-        for (int i = 0; i < coord.length; i++){
-            int blockSize = (int) NEXTTETRIMINO_HEIGHT / 2;
-=======
-        for (int i = 0; i < 4; i++){
+
+        for (int i = 0; i < coord.length; i++){            
             int blockSize = (int) NEXTTETRIMINO_DIM / 2;
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
+
             int x = blockSize * (1 + coord[i][1]);
             int y = blockSize * (1 + coord[i][0]);
             Rectangle rec = new Rectangle(x, y, blockSize, blockSize);

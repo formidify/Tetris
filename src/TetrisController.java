@@ -46,11 +46,9 @@ public class TetrisController {
         currTetrimino = new Tetrimino(board);
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
-<<<<<<< HEAD
+        
         board.putTetrimino(currTetrimino);
-=======
-
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
+        
         Timer timer = new java.util.Timer();
         TimerTask timerTask = new java.util.TimerTask() {
             public void run() {
@@ -59,22 +57,11 @@ public class TetrisController {
 
                     public void run() {
                         if (!checkEndGame()) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
                             if (!currTetrimino.landed()) {
 
                                 moveTetriminoDown(currTetrimino);
-<<<<<<< HEAD
                             } else {
-=======
-                                mainView.updateScore(40);
-
-                            } else {
-
-                                board.putTetrimino(currTetrimino);
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
                                 destroyRows();
                                 changeToNextTetrimino();
                             }
@@ -87,12 +74,8 @@ public class TetrisController {
                 });
             }
         };
-<<<<<<< HEAD
-        timer.schedule(timerTask, 1000, (long) (1000 / currTetrimino.speed));
-=======
 
-        timer.schedule(timerTask, 3000, (long) (1000 / currTetrimino.speed));
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
+        timer.schedule(timerTask, 1000, (long) (1000 / currTetrimino.speed));
     }
 
 
@@ -106,15 +89,13 @@ public class TetrisController {
         for(int i = 0; i < listOfFullRows.size(); i++) {
             mainView.clearLine(listOfFullRows.get(i));
         }
-<<<<<<< HEAD
+
         //update board score, defaults to 10 per line for now
         if (listOfFullRows.size()>0) {
             mainView.updateScore(10 * listOfFullRows.size());
         }
 //        for(int j = listOfFullRows.size() - 1; j >= 0; j--) {
-=======
 
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
         for(int j : listOfFullRows) {
             mainView.moveRow(j);
         }

@@ -34,11 +34,14 @@ public class Board {
     }
 
     void clearBoard(){
-        for (int i = 0; i < NUMROW; i++){
-            for (int j = 0; j < NUMCOLUMN; j++){
-                board[i][j] = new Square();
+        for (int i = 0; i < NUMCOLUMN; i++){
+            for (int j = 0; j < NUMROW; j++){
+                board[j][i] = false;
             }
+            
+            rowAboveBoard[0][i] = false;
         }
+        
     }
 
     void putTetrimino(Tetrimino tetrimino) {
@@ -99,7 +102,6 @@ public class Board {
     }
 
     /*
-<<<<<<< HEAD
      * Helper function to determine if all the elevated blocks can fit partially into the grid
      */
     private boolean canFit(int[][] pos) {
@@ -114,10 +116,9 @@ public class Board {
     }
 
 
-=======
+     /*
      * Checks if the row is full
      */
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
     boolean rowIsFull(int row){
         for (int col = 0; col < NUMCOLUMN; col++){
             if (!board[row][col]){
@@ -166,21 +167,15 @@ public class Board {
     boolean reachBoardTop() {
         // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
-<<<<<<< HEAD
+
             if (rowAboveBoard[0][col]){
-=======
-            if (! board[0][col].isEmpty){
                 clearBoard();
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
                 return true;
             }
         }
         return false;
     }
-<<<<<<< HEAD
     /*
-=======
-
     //Do we really need this?
 >>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
     class Square{
