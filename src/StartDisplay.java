@@ -113,7 +113,7 @@ public class StartDisplay {
     private Stage tutorial(){
         Stage newStage = new Stage();
         //FlowPane tutorialPane = new FlowPane();
-        Text explanationText = new Text("Tetris is a tile matching puzzle video game, originally designed by Alexey Pajitnov")
+        Text explanationText = new Text("Tetris is a tile matching puzzle video game, originally designed by Alexey Pajitnov");
         Text objectivesText = new Text("The objective of Tetris is to destroy as many rows of blocks (called tetriminos) as possible without topping out of the screen!");
 
         Text text2 = new Text("Directions:");
@@ -121,11 +121,11 @@ public class StartDisplay {
         Text upText = new Text("Up: Rotate the tetrimino");
         Text downText  = new Text("Down: Speed up tetrimino");
         Text rightLeftText = new Text ("Right/Left: Move the tetrimino left and right on the screen");
-        Text spaceText = new Text("Space: Teleport tetrimino to the bottom of the screen")
+        Text spaceText = new Text("Space: Teleport tetrimino to the bottom of the screen");
         TextFlow textFlow = new TextFlow(explanationText, objectivesText, text2, upText, downText, rightLeftText, spaceText);
-        Scene scene2 = new Scene(TextFlow, 300, 300);
+        Scene scene2 = new Scene(textFlow, 300, 300);
         newStage.setScene(scene2);
-        return newStage
+        return newStage;
     }
 
     /*
