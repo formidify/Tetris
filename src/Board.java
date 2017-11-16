@@ -13,18 +13,24 @@ public class Board {
 
 
     Board(BoardDisplay boardDisplay){
-        rowAboveBoard = new boolean[1][NUMCOLUMN];
+         rowAboveBoard = new boolean[1][NUMCOLUMN];
          board = new boolean[NUMROW][NUMCOLUMN];
-         for (int i = 0; i < NUMROW; i++){
-             for (int j = 0; j < NUMCOLUMN; j++){
-                 board[i][j] = false;
-                 if (i == 0){
-                     rowAboveBoard[i][j] = false;
-                 }
-             }
-         }
+         clearBoard();
          boardView = boardDisplay;
     }
+
+    /*
+     * Clears/instantiates the board and the row above board
+     */
+    void clearBoard(){
+        for (int i = 0; i < NUMCOLUMN; i++){
+            for (int j = 0; j < NUMROW; j++){
+                board[j][i] = false;
+            }
+            rowAboveBoard[0][i] = false;
+        }
+    }
+
     void removeTetrimino(Tetrimino tetrimino){
         int[][] position = tetrimino.getPosition();
         for (int[] pos : position) {
@@ -154,6 +160,7 @@ public class Board {
         // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
             if (rowAboveBoard[0][col]){
+                clearBoard();
                 return true;
             }
         }
