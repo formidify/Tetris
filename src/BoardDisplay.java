@@ -93,7 +93,7 @@ public class BoardDisplay {
      */
     void drawTetrimino(Tetrimino tetrimino){
         int [][] position = tetrimino.getPosition();
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < position.length; i++){
             int row = position[i][0];
             int col = position[i][1];
             int x = 25* col;
@@ -111,7 +111,7 @@ public class BoardDisplay {
      */
     void undrawTetrimino(Tetrimino tetrimino) {
         int[][] position = tetrimino.getPosition();
-        for (int i=0; i < 4; i++){
+        for (int i=0; i < position.length; i++){
             int row = position[i][0];
             int col = position[i][1];
             gameGrid.getChildren().remove(grid[row][col]);
@@ -233,7 +233,7 @@ public class BoardDisplay {
             next.getChildren().clear();
         }
 
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < coord.length; i++){
             int blockSize = (int) NEXTTETRIMINO_HEIGHT / 2;
             int x = blockSize * (1 + coord[i][1]);
             int y = blockSize * (1 + coord[i][0]);

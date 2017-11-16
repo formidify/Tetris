@@ -11,7 +11,7 @@ public class Tetrimino {
     String shape;
     int orientation;
     private int[] center;
-    private int[][] position;
+    int[][] position;
     double speed;
     private Color color;
     Board mainBoard;
@@ -286,7 +286,7 @@ public class Tetrimino {
         if (x < 0 || x > 23 || y < 0 || y > 11) {
             return false;
         }
-        if (!mainBoard.board[x][y].isEmpty) {
+        if (mainBoard.board[x][y]) {
             return false;
         }
         return true;
@@ -352,7 +352,19 @@ public class Tetrimino {
             if (row == Board.NUMROW - 1) {
                 return true;
             }
-            if (!mainBoard.board[row + 1][col].isEmpty){
+            if (!ifSameTetrimino(row + 1, col) && mainBoard.board[row + 1][col]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Helper method that checks if the block below another is also part of the same tetrimino
+     */
+    private boolean ifSameTetrimino(int row, int col){
+        for (int[] aPosition : position) {
+            if (aPosition[0] == row && aPosition[1] == col){
                 return true;
             }
         }

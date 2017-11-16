@@ -46,23 +46,26 @@ public class TetrisController {
         currTetrimino = new Tetrimino(board);
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
+        board.putTetrimino(currTetrimino);
+        mainView.drawTetrimino(currTetrimino);
         Timer timer = new java.util.Timer();
         TimerTask timerTask = new java.util.TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
+                        //mainView.drawTetrimino(currTetrimino);
                         if (!checkEndGame()) {
                             // TODO JUST FOR TESTING RN
                             //System.out.println(board.rowIsFull(23));
-
-                            //if (board.rowIsFull(23)) {destroyRows();}
+                            //if (board.rowIsFull(23)) {destroyRows();
                             if (!currTetrimino.landed()) {
+                                board.removeTetrimino(currTetrimino);
                                 moveTetriminoDown(currTetrimino);
+                                board.putTetrimino(currTetrimino);
                                 //System.out.println("falling");
                                 // check full rows
                                 mainView.updateScore(40);
                             } else {
-                                board.putTetrimino(currTetrimino);
                                 destroyRows();
                                 changeToNextTetrimino();
                             }
@@ -107,11 +110,19 @@ public class TetrisController {
         currTetrimino = nextTetrimino;
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
+        int[][] pos = currTetrimino.getPosition();
+        for (int i = 0; i < pos.length; i++) {
+            System.out.println(pos[i][0]);
+            System.out.println(pos[i][1]);
+        }
+        board.putTetrimino(currTetrimino);
+        mainView.drawTetrimino(currTetrimino);
     }
 
     void respondToKey(KeyCode keyPressed){
         if (currTetrimino != null){
             if (!currTetrimino.landed()) {
+                board.removeTetrimino(currTetrimino);
                 mainView.undrawTetrimino(currTetrimino);
                 if (keyPressed == KeyCode.LEFT) {
                     currTetrimino.newTranslateLeft();
@@ -124,6 +135,7 @@ public class TetrisController {
                 } else if (keyPressed == KeyCode.SPACE) {
                     currTetrimino.fallToBottom();
                 }
+                board.putTetrimino(currTetrimino);
                 mainView.drawTetrimino(currTetrimino);
             }
         }
