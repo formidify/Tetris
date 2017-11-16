@@ -34,6 +34,7 @@ public class BoardDisplay {
     BorderPane score;
     BorderPane nextTetrimino;
     Rectangle[][] grid;
+    int currentScore;
 
 
     public BoardDisplay(){
@@ -42,6 +43,7 @@ public class BoardDisplay {
         nextTetrimino = new BorderPane();
         gameGrid = new Pane();
         grid = new Rectangle[GRID_ROWS][GRID_COLS];
+        currentScore = 0;
    }
 
     public void mainScene(Stage primaryStage, TetrisController tetrisController) {
@@ -250,8 +252,9 @@ public class BoardDisplay {
      * @param: new score
      */
     void updateScore(int newScore){
+        currentScore += newScore;
         Text change = (Text) score.getChildren().get(1);
-        change.setText(Integer.toString(newScore));
+        change.setText(Integer.toString(currentScore));
     }
 
 

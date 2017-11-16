@@ -30,6 +30,7 @@ public class Board {
         for (int[] pos : position) {
             board[pos[0]][pos[1]] = false;
         }
+        boardView.undrawTetrimino(tetrimino);
     }
 
     void putTetrimino(Tetrimino tetrimino) {
@@ -38,13 +39,14 @@ public class Board {
         for (int[] pos : position) {
             if (board[pos[0]][pos[1]]){
                 placeTetriminoOutOfBounds(tetrimino);
+                boardView.drawTetrimino(tetrimino);
                 return;
             }
         }
         for (int[] pos : position) {
             board[pos[0]][pos[1]] = true;
         }
-        //boardView.updateBoardView(board);
+        boardView.drawTetrimino(tetrimino);
     }
 
     /*
