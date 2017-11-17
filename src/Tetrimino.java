@@ -39,7 +39,8 @@ public class Tetrimino {
                 tetriminoColor = Color.LIGHTBLUE;
                 break;
             case "Square":
-                tetriminoColor = Color.YELLOW;
+                tetriminoColor = Color.GOLD;
+                break;
             case "L":
                 tetriminoColor = Color.ORANGE;
                 break;
