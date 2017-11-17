@@ -26,9 +26,11 @@ public class RestartDisplay {
     private Text directions = new Text("Would you like to start a new game?");
 
     private TetrisController controller;
+    private StartDisplay newStartDisplay;
 
-    void restartScene(Stage primaryStage, TetrisController tetrisController) {
+    void restartScene(Stage primaryStage, TetrisController tetrisController, StartDisplay startView) {
         controller = tetrisController;
+        newStartDisplay = startView;
 
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
@@ -60,7 +62,10 @@ public class RestartDisplay {
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.startRound();
+                Stage newStage = new Stage();
+                newStartDisplay.startScene(newStage, controller);
+
+                ((Node)(event.getSource())).getScene().getWindow().hide();
             }
         });
 

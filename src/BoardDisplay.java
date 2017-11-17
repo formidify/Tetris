@@ -36,7 +36,6 @@ public class BoardDisplay {
     int currentScore;
 
 
-
     public void mainScene(Stage primaryStage, TetrisController tetrisController) {
 
         //necessary to instantiate all these variables here because otherwise when
@@ -46,6 +45,7 @@ public class BoardDisplay {
         nextTetrimino = new BorderPane();
         gameGrid = new Pane();
         currentScore = 0;
+
         grid = new Rectangle[Board.NUMROW][Board.NUMCOLUMN];
 
 

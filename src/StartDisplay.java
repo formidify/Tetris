@@ -69,7 +69,9 @@ public class StartDisplay {
         play.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
                 controller.startRound();
+
             }
         });
 

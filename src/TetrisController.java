@@ -22,6 +22,7 @@ public class TetrisController {
 
     TetrisController(Stage primaryStage){
         primary = primaryStage;
+        gameSpeed = 1000;
 
         startView = new StartDisplay();
         mainView = new BoardDisplay();
@@ -39,7 +40,7 @@ public class TetrisController {
     }
 
     private void endGame(){
-        restartView.restartScene(primary, this);
+        restartView.restartScene(primary, this, startView);
     }
 
     void startRound() {
