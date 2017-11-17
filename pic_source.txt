@@ -12,3 +12,12 @@ https://www.iconfinder.com/icons/183191/redo_icon#size=128
 
 exit icon: 
 https://www.iconfinder.com/icons/293657/x_icon#size=128
+
+slow mode icon:
+https://www.flaticon.com/free-icon/snail-side-view_36456
+
+med mode icon:
+https://pixabay.com/en/bunny-clipart-issue-fast-icon-1298864/
+
+fast mode icon:
+https://pixabay.com/en/cheetah-animal-fast-run-running-312034/

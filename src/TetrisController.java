@@ -10,6 +10,7 @@ import java.util.TimerTask;
 public class TetrisController {
 
     Stage primary;
+    int gameSpeed;
 
     StartDisplay startView;
     BoardDisplay mainView;
@@ -75,10 +76,12 @@ public class TetrisController {
             }
         };
 
-        timer.schedule(timerTask, 1000, (long) (1000 / currTetrimino.speed));
+        timer.schedule(timerTask, 1000, (long) (gameSpeed / currTetrimino.speed));
     }
 
-
+    void testingController(){
+        System.out.println("The controller is not null");
+    }
     /*
      * Destroys the full rows in the board and moves un-full rows down the board accordingly
      */

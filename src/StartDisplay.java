@@ -90,6 +90,8 @@ public class StartDisplay {
         settings.setGraphic(settingsView);
         settings.setTooltip(new Tooltip("settings"));
 
+        settings.setOnAction(this::handleSettingsAction);
+
         // create icon for help button, set its size, add popup tooltip
         Image imageHelp = new Image(getClass().getResourceAsStream("help.png"));
         ImageView helpView = new ImageView(imageHelp);
@@ -105,6 +107,12 @@ public class StartDisplay {
 
     private void handleTutorial(ActionEvent event) {
         tutorial().showAndWait();
+    }
+
+    private void handleSettingsAction(ActionEvent event) {
+        Stage newStage = new Stage();
+        SettingsDisplay settings = new SettingsDisplay();
+        settings.settingStart(newStage, controller);
     }
 
     private Stage tutorial(){
