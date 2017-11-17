@@ -11,11 +11,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javafx.scene.text.TextFlow;
 
 /**
  * Created by yuq on 11/7/17.
@@ -101,31 +98,38 @@ public class StartDisplay {
         help.setGraphic(helpView);
         help.setTooltip(new Tooltip("help"));
 
-        help.setOnAction(this::handleButtonAction);
+        help.setOnAction(this::handleTutorial);
 
         return buttonPane;
     }
 
-    private void handleButtonAction(ActionEvent event) {
+    private void handleTutorial(ActionEvent event) {
         tutorial().showAndWait();
     }
 
     private Stage tutorial(){
-        Stage newStage = new Stage();
-        //FlowPane tutorialPane = new FlowPane();
-        Text explanationText = new Text("Tetris is a tile matching puzzle video game, originally designed by Alexey Pajitnov");
-        Text objectivesText = new Text("The objective of Tetris is to destroy as many rows of blocks (called tetriminos) as possible without topping out of the screen!");
+        Stage tutorialStage = new Stage();
 
-        Text text2 = new Text("Directions:");
+        Text explanationText = new Text("\nTetris is a tile matching puzzle video game, originally designed by Alexey Pajitnov.");
+        Text objectivesText = new Text("\nThe objective of Tetris is to destroy as many rows of blocks (called tetriminos) as possible without topping out of the screen!");
 
-        Text upText = new Text("Up: Rotate the tetrimino");
-        Text downText  = new Text("Down: Speed up tetrimino");
-        Text rightLeftText = new Text ("Right/Left: Move the tetrimino left and right on the screen");
-        Text spaceText = new Text("Space: Teleport tetrimino to the bottom of the screen");
-        TextFlow textFlow = new TextFlow(explanationText, objectivesText, text2, upText, downText, rightLeftText, spaceText);
-        Scene scene2 = new Scene(textFlow, 300, 300);
-        newStage.setScene(scene2);
-        return newStage;
+        Text directionsHeading = new Text("\n\nDirections:");
+        directionsHeading.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+
+        Text upText = new Text("\nUp: Rotate the tetrimino");
+        Text downText  = new Text("\nDown: Speed up tetrimino");
+        Text rightLeftText = new Text ("\nRight/Left: Move the tetrimino left and right on the screen");
+        Text spaceText = new Text("\nSpace: Teleport tetrimino to the bottom of the screen");
+        TextFlow textFlow = new TextFlow();
+
+        textFlow.setPadding(new Insets(10, 10, 10, 10));
+        textFlow.getChildren().addAll(explanationText, objectivesText, directionsHeading, upText, downText, rightLeftText, spaceText);
+        textFlow.setLineSpacing(2.0);
+
+        Scene tutorialScene = new Scene(textFlow, 300, 300);
+        tutorialStage.setScene(tutorialScene);
+
+        return tutorialStage;
     }
 
     /*

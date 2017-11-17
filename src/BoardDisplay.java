@@ -58,6 +58,8 @@ public class BoardDisplay {
         gameGrid.setMinSize(BOARD_WIDTH, BOARD_HEIGHT);
         gameGrid.setBorder(gameBorder);
 
+        drawGrid();
+
         HBox title = addTitle();
         score = addScoreDisplay();
         nextTetrimino = addNextTetriminoDisplay();
@@ -89,6 +91,28 @@ public class BoardDisplay {
 
     }
 
+    private void drawGrid(){
+
+        for(int i = 0; i < Board.NUMCOLUMN; i++){
+            Line colLine = new Line();
+            colLine.setStartX(TETRIMINO_DIM * i);
+            colLine.setStartY(0);
+            colLine.setEndX(TETRIMINO_DIM * i);
+            colLine.setEndY(BOARD_HEIGHT);
+
+            gameGrid.getChildren().add(colLine);
+        }
+
+        for(int i = 0; i < Board.NUMROW; i++){
+            Line rowLine = new Line();
+            rowLine.setStartX(0);
+            rowLine.setStartY(TETRIMINO_DIM * i);
+            rowLine.setEndX(BOARD_WIDTH);
+            rowLine.setEndY(TETRIMINO_DIM * i);
+
+            gameGrid.getChildren().add(rowLine);
+        }
+    }
 
     /*
      * Draws a tetrimino in the pane using rectangles. We base the position of the rectangles on
