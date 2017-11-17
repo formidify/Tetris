@@ -99,6 +99,8 @@ public class BoardDisplay {
             colLine.setStartY(0);
             colLine.setEndX(TETRIMINO_DIM * i);
             colLine.setEndY(BOARD_HEIGHT);
+            colLine.setFill(Color.rgb(200, 200, 200));
+            colLine.setStrokeWidth(0.6);
 
             gameGrid.getChildren().add(colLine);
         }
@@ -109,6 +111,8 @@ public class BoardDisplay {
             rowLine.setStartY(TETRIMINO_DIM * i);
             rowLine.setEndX(BOARD_WIDTH);
             rowLine.setEndY(TETRIMINO_DIM * i);
+            rowLine.setFill(Color.rgb(200, 200, 200));
+            rowLine.setStrokeWidth(0.6);
 
             gameGrid.getChildren().add(rowLine);
         }
