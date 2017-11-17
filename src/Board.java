@@ -39,16 +39,6 @@ public class Board {
         boardView.undrawTetrimino(tetrimino);
     }
 
-    void clearBoard(){
-        for (int i = 0; i < NUMCOLUMN; i++){
-            for (int j = 0; j < NUMROW; j++){
-                board[j][i] = false;
-            }
-            
-            rowAboveBoard[0][i] = false;
-        }
-        
-    }
 
     void putTetrimino(Tetrimino tetrimino) {
         int[][] position = tetrimino.getPosition();
