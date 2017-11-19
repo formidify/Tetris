@@ -16,13 +16,12 @@ import javafx.stage.Stage;
 
 /**
  * Creates a starting screen GUI for Tetris. The starting screen is a BorderPane that has a Title
- * Pane and several buttons as children. The TetrisController is a observer of this class as it is
+ * Pane and several buttons as children. The TetrisController is an observer of this class as it is
  * passed in as a parameter for startScene. The game speed is set in this class and passed to the
  * controller. In addition, the controller starts the round after it is passed an event handler
  * from the starting screen.
  *
  */
-
 
 public class StartDisplay {
     private static final double MIN_BUTTON_WIDTH = 30;
@@ -66,8 +65,6 @@ public class StartDisplay {
         buttonPane.add(settings, 0, 2);
         buttonPane.add(help, 1, 2);
 
-
-
         // create icon for play button, set its size, add popup tooltip
         play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         makeIconButton("images/play.png", play, "Play a new game!");
@@ -78,7 +75,6 @@ public class StartDisplay {
             public void handle(ActionEvent event) {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 controller.startRound();
-
             }
         });
 
@@ -86,7 +82,7 @@ public class StartDisplay {
         makeIconButton("images/settings.png", settings, "Settings");
 
         //Handle event of settings button
-        settings.setOnAction(this::handleSettingsAction);
+        settings.setOnAction(this::handleSettings);
 
         // create icon for help button, set its size, add popup tooltip
         makeIconButton("images/help.png", help, "Help");
@@ -104,8 +100,7 @@ public class StartDisplay {
         if(fileName.equals("images/play.png")){
             buttonView.setFitHeight( 2 * MIN_BUTTON_WIDTH );
             buttonView.setFitWidth( 2 * MIN_BUTTON_WIDTH );
-        }
-        else{
+        } else{
             buttonView.setFitHeight(MIN_BUTTON_WIDTH );
             buttonView.setFitWidth(MIN_BUTTON_WIDTH );
         }
@@ -118,7 +113,7 @@ public class StartDisplay {
         tutorial().showAndWait();
     }
 
-    private void handleSettingsAction(ActionEvent event) {
+    private void handleSettings(ActionEvent event) {
         Stage newStage = new Stage();
         SettingsDisplay settings = new SettingsDisplay();
         settings.settingStart(newStage, controller);
@@ -142,7 +137,8 @@ public class StartDisplay {
         TextFlow textFlow = new TextFlow();
 
         textFlow.setPadding(new Insets(10, 10, 10, 10));
-        textFlow.getChildren().addAll(explanationText, objectivesText, directionsHeading, upText, downText, rightLeftText, spaceText);
+        textFlow.getChildren().addAll(explanationText, objectivesText, directionsHeading, upText, downText,
+                                      rightLeftText, spaceText);
         textFlow.setLineSpacing(2.0);
 
         Scene tutorialScene = new Scene(textFlow, 300, 300);
