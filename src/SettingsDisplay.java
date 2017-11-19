@@ -17,10 +17,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Created by yuq on 11/7/17.
- * Creates the starting screen for tetris.
+ * Creates a settings screen GUI for Tetris...
+ *
  */
-
 
 public class SettingsDisplay{
     private static final int SLOW_SPEED = 800;

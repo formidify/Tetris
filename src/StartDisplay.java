@@ -20,7 +20,6 @@ import javafx.stage.Stage;
  * passed in as a parameter for startScene. The game speed is set in this class and passed to the
  * controller. In addition, the controller starts the round after it is passed an event handler
  * from the starting screen.
- *
  */
 
 public class StartDisplay {
@@ -60,34 +59,20 @@ public class StartDisplay {
         Button play = new Button();
         Button settings = new Button();
         Button help = new Button();
-
         buttonPane.add(play, 0, 0, 2,2);
         buttonPane.add(settings, 0, 2);
         buttonPane.add(help, 1, 2);
 
-        // create icon for play button, set its size, add popup tooltip
         play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        // create icon for play, settings and help button, set their sizes, add popup tooltips
         makeIconButton("images/play.png", play, "Play a new game!");
-
-        //Handle event of play button
-        play.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-                controller.startRound();
-            }
-        });
-
-        // create icon for settings button, set its size, add popup tooltip
         makeIconButton("images/settings.png", settings, "Settings");
-
-        //Handle event of settings button
-        settings.setOnAction(this::handleSettings);
-
-        // create icon for help button, set its size, add popup tooltip
         makeIconButton("images/help.png", help, "Help");
 
-        //Handle event of help button
+        //Handle event of the buttons
+        play.setOnAction(this::handlePlay);
+        settings.setOnAction(this::handleSettings);
         help.setOnAction(this::handleTutorial);
 
         return buttonPane;
@@ -109,15 +94,20 @@ public class StartDisplay {
         button.setTooltip(new Tooltip(toolTipText));
     }
 
-    private void handleTutorial(ActionEvent event) {
-        tutorial().showAndWait();
+    private void handlePlay(ActionEvent event) {
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+        controller.startRound();
     }
-
     private void handleSettings(ActionEvent event) {
         Stage newStage = new Stage();
         SettingsDisplay settings = new SettingsDisplay();
         settings.settingStart(newStage, controller);
     }
+
+    private void handleTutorial(ActionEvent event) {
+        tutorial().showAndWait();
+    }
+
 
     private Stage tutorial() {
         Stage tutorialStage = new Stage();
