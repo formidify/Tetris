@@ -14,14 +14,12 @@ public class Board {
 
     boolean[][] board;
     boolean[][] rowAboveBoard;
-    BoardDisplay boardView;
 
 
-    Board(BoardDisplay boardDisplay){
+    Board(){
          rowAboveBoard = new boolean[1][NUMCOLUMN];
          board = new boolean[NUMROW][NUMCOLUMN];
          clearBoard();
-         boardView = boardDisplay;
     }
 
     /*
@@ -46,7 +44,6 @@ public class Board {
         for (int[] pos : position) {
             board[pos[0]][pos[1]] = false;
         }
-        boardView.undrawTetrimino(tetrimino);
     }
 
     /*
@@ -60,7 +57,6 @@ public class Board {
         for (int[] pos : position) {
             if (board[pos[0]][pos[1]]){
                 placeTetriminoOutOfBounds(tetrimino);
-                boardView.drawTetrimino(tetrimino);
                 return;
             }
         }
@@ -69,7 +65,6 @@ public class Board {
             board[pos[0]][pos[1]] = true;
         }
 
-        boardView.drawTetrimino(tetrimino);
     }
 
     /*

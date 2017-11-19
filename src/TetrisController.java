@@ -35,7 +35,7 @@ public class TetrisController {
         mainView = new BoardDisplay();
         restartView = new RestartDisplay();
 
-        board = new Board(mainView);
+        board = new Board();
     }
 
     /*
@@ -64,6 +64,7 @@ public class TetrisController {
         mainView.updateNextTetrimino(nextTetrimino);
         
         board.putTetrimino(currTetrimino);
+        mainView.drawTetrimino(currTetrimino);
         
         Timer timer = new java.util.Timer();
         TimerTask timerTask = new java.util.TimerTask() {
@@ -118,8 +119,10 @@ public class TetrisController {
 
     private void moveTetriminoDown(Tetrimino tetrimino) {
         board.removeTetrimino(tetrimino);
+        mainView.undrawTetrimino(tetrimino);
         tetrimino.translateDown();
         board.putTetrimino(tetrimino);
+        mainView.drawTetrimino(tetrimino);
     }
 
     private void changeToNextTetrimino() {
@@ -128,6 +131,7 @@ public class TetrisController {
         nextTetrimino = new Tetrimino(board);
         mainView.updateNextTetrimino(nextTetrimino);
         board.putTetrimino(currTetrimino);
+        mainView.drawTetrimino(currTetrimino);
     }
 
     /*
@@ -137,6 +141,7 @@ public class TetrisController {
         if (currTetrimino != null){
             if (!currTetrimino.landed()) {
                 board.removeTetrimino(currTetrimino);
+                mainView.undrawTetrimino(currTetrimino);
 
                 if (keyPressed == KeyCode.LEFT) {
                     currTetrimino.translateLeft();
@@ -151,6 +156,7 @@ public class TetrisController {
                 }
 
                 board.putTetrimino(currTetrimino);
+                mainView.drawTetrimino(currTetrimino);
             }
         }
     }

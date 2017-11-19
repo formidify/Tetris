@@ -21,7 +21,6 @@ public class Tetrimino {
     double speed;
     private Color color;
     Board mainBoard;
-    BoardDisplay boardView;
     boolean landing;
 
     Tetrimino(Board board){
@@ -33,7 +32,6 @@ public class Tetrimino {
         setPosition();
         color = chooseColor();
         mainBoard = board;
-        boardView = board.boardView;
         landing = false;
 
     }
