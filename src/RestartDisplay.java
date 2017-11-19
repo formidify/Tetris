@@ -1,3 +1,4 @@
+import com.sun.tools.javadoc.Start;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -5,9 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -26,7 +25,6 @@ public class RestartDisplay {
 
     private TetrisController controller;
     private StartDisplay newStartDisplay;
-    private static final int BUTTON_ICON_SIZE = 60;
 
     void restartScene(Stage primaryStage, TetrisController tetrisController, StartDisplay startView) {
         controller = tetrisController;
@@ -58,8 +56,10 @@ public class RestartDisplay {
         buttonPane.add(exit, 2, 0);
 
         // create icons and tooltips for restart and exit buttons
-        makeIconButton("images/newGame.png", newGame, "Start a new game!");
-        makeIconButton("images/exit.png", exit,"Exit!");
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/newGame.png")), newGame,
+                                    "Start a new game!", new int[] {60, 60});
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/exit.png")), exit,
+                                    "Exit!", new int[] {60, 60});
 
         // By pressing newGame button, a new round is initiated and this restart window is closed.
         newGame.setOnAction(new EventHandler<ActionEvent>() {
@@ -80,15 +80,6 @@ public class RestartDisplay {
         });
 
         return buttonPane;
-    }
-
-    private void makeIconButton(String fileName, Button button, String toolTipText) {
-        Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
-        ImageView buttonView = new ImageView(buttonImage);
-        buttonView.setFitHeight( BUTTON_ICON_SIZE );
-        buttonView.setFitWidth( BUTTON_ICON_SIZE );
-        button.setGraphic(buttonView);
-        button.setTooltip(new Tooltip(toolTipText));
     }
 
     //Adding and formatting the instruction text

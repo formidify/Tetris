@@ -5,9 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -61,60 +59,36 @@ public class SettingsDisplay{
         buttonPane.add(fast, 0, 2,1,1);
         buttonPane.add(ok, 0, 5,1,1);
 
-        // create icons and tooltips for the buttons
-        makeIconButton();
-
-        // create icon for the slow mode, add popup tooltip
         slow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageSlow = new Image(getClass().getResourceAsStream("images/slow.png"));
-        ImageView slowView = new ImageView(imageSlow);
-        slowView.setFitHeight(70);
-        slowView.setFitWidth(70);
-        slow.setGraphic(slowView);
-        slow.setTooltip(new Tooltip("slow mode"));
+        med.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        fast.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        ok.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
+        // create icons and tooltips for the buttons
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/slow.png")), slow,
+                "slow mode", new int[] {70, 70});
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/med.png")), med,
+                "medium mode", new int[] {60, 60});
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/fast.png")), fast,
+                "fast mode", new int[] {60, 110});
+        StartDisplay.makeIconButton(new Image(getClass().getResourceAsStream("images/ok.png")), ok,
+                "Done with settings!", new int[] {40, 40});
+
+        // create handlers for the buttons
         slow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { controller.gameSpeed = SLOW_SPEED; }
         });
-
-
-        // create icon for the medium mode, add popup tooltip
-        med.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageMed = new Image(getClass().getResourceAsStream("images/med.png"));
-        ImageView medView = new ImageView(imageMed);
-        medView.setFitHeight(60);
-        medView.setFitWidth(60);
-        med.setGraphic(medView);
-        med.setTooltip(new Tooltip("medium mode"));
 
         med.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { controller.gameSpeed = MED_SPEED; }
         });
 
-        // create icon for the fast mode, add popup tooltip
-        fast.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageFast = new Image(getClass().getResourceAsStream("images/fast.png"));
-        ImageView fastView = new ImageView(imageFast);
-        fastView.setFitHeight(60);
-        fastView.setFitWidth(110);
-        fast.setGraphic(fastView);
-        fast.setTooltip(new Tooltip("fast mode"));
-
         fast.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { controller.gameSpeed = FAST_SPEED; }
         });
-
-        // create icon for ok button, add popup tooltip
-        ok.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageOK = new Image(getClass().getResourceAsStream("images/ok.png"));
-        ImageView okView = new ImageView(imageOK);
-        okView.setFitHeight(40);
-        okView.setFitWidth(40);
-        ok.setGraphic(okView);
-        ok.setTooltip(new Tooltip("Done with settings!"));
 
         ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -136,7 +110,5 @@ public class SettingsDisplay{
         flowPane.getChildren().add(text);
         return flowPane;
     }
-
-
 
 }
