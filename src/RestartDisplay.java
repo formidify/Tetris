@@ -70,7 +70,7 @@ public class RestartDisplay {
         });
 
         // create icon for new game button, add popup tooltip
-        Image imageNewG = new Image(getClass().getResourceAsStream("newGame.png"));
+        Image imageNewG = new Image(getClass().getResourceAsStream("images/newGame.png"));
         ImageView newgameView = new ImageView(imageNewG);
         newgameView.setFitHeight(60);
         newgameView.setFitWidth(60);
@@ -79,7 +79,7 @@ public class RestartDisplay {
 
 
         // create icon for exit button, add popup tooltip
-        Image imageExit = new Image(getClass().getResourceAsStream("exit.png"));
+        Image imageExit = new Image(getClass().getResourceAsStream("images/exit.png"));
         ImageView exitView = new ImageView(imageExit);
         exitView.setFitHeight(60);
         exitView.setFitWidth(60);

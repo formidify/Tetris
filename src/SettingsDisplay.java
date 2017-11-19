@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.application.Application;
 
 /**
  * Created by yuq on 11/7/17.
@@ -63,7 +62,7 @@ public class SettingsDisplay{
 
         // create icon for the slow mode, add popup tooltip
         slow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageSlow = new Image(getClass().getResourceAsStream("slow.png"));
+        Image imageSlow = new Image(getClass().getResourceAsStream("images/slow.png"));
         ImageView slowView = new ImageView(imageSlow);
         slowView.setFitHeight(70);
         slowView.setFitWidth(70);
@@ -78,7 +77,7 @@ public class SettingsDisplay{
 
         // create icon for the medium mode, add popup tooltip
         med.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageMed = new Image(getClass().getResourceAsStream("med.png"));
+        Image imageMed = new Image(getClass().getResourceAsStream("images/med.png"));
         ImageView medView = new ImageView(imageMed);
         medView.setFitHeight(60);
         medView.setFitWidth(60);
@@ -92,7 +91,7 @@ public class SettingsDisplay{
 
         // create icon for the fast mode, add popup tooltip
         fast.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageFast = new Image(getClass().getResourceAsStream("fast.png"));
+        Image imageFast = new Image(getClass().getResourceAsStream("images/fast.png"));
         ImageView fastView = new ImageView(imageFast);
         fastView.setFitHeight(60);
         fastView.setFitWidth(110);
@@ -106,7 +105,7 @@ public class SettingsDisplay{
 
         // create icon for ok button, add popup tooltip
         ok.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imageOK = new Image(getClass().getResourceAsStream("ok.png"));
+        Image imageOK = new Image(getClass().getResourceAsStream("images/ok.png"));
         ImageView okView = new ImageView(imageOK);
         okView.setFitHeight(40);
         okView.setFitWidth(40);

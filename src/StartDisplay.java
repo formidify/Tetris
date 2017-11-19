@@ -15,13 +15,17 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 /**
- * Created by yuq on 11/7/17.
- * Creates the starting screen for tetris.
+ * Creates a starting screen GUI for Tetris. The starting screen is a BorderPane that has a Title
+ * Pane and several buttons as children. The TetrisController is a observer of this class as it is
+ * passed in as a parameter for startScene. The game speed is set in this class and passed to the
+ * controller. In addition, the controller starts the round after it is passed an event handler
+ * from the starting screen.
+ *
  */
 
 
 public class StartDisplay {
-    public static final double MIN_BUTTON_WIDTH = 30;
+    private static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("TETRIS");
 
     private TetrisController controller;
@@ -30,7 +34,7 @@ public class StartDisplay {
         controller = tetrisController;
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
-        Node directionsPane = addText(directions, FontWeight.BOLD, 60);
+        Node directionsPane = addTitleText(directions);
 
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
@@ -44,9 +48,7 @@ public class StartDisplay {
 
     /*
     * Creating an overall grid pane for the starting screen and populating pane with buttons
-    * for starting the game, starting the tutorial, or more options for game look and control.
-    * Currently, we have not yet implemented the tutorial or the more options as we are 
-    * yet unsure of what they will look like or what aspects of the game they will have control over.
+    * for starting the game, starting the tutorial, or more options for game difficulty.
     */
     private Node addButtons() {
         GridPane buttonPane = new GridPane();
@@ -54,7 +56,6 @@ public class StartDisplay {
         buttonPane.setHgap(20);
         buttonPane.setVgap(20);
         buttonPane.setPadding(new Insets(0, 10, 0, 10));
-        //buttonPane.setStyle("-fx-background-image: url('images/background.png');-fx-background-size: stretch;-fx-background-position:center top;");
 
         // Create start, setting, help buttons and add them to the grid
         Button play = new Button();
@@ -65,7 +66,13 @@ public class StartDisplay {
         buttonPane.add(settings, 0, 2);
         buttonPane.add(help, 1, 2);
 
-        // Handle event of the buttons
+
+
+        // create icon for play button, set its size, add popup tooltip
+        play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        makeIconButton("images/play.png", play, "Play a new game!");
+
+        //Handle event of play button
         play.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -75,36 +82,36 @@ public class StartDisplay {
             }
         });
 
-        // create icon for play button, set its size, add popup tooltip
-        play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        Image imagePlay = new Image(getClass().getResourceAsStream("play.png"));
-        ImageView playView = new ImageView(imagePlay);
-        playView.setFitHeight( 2 * MIN_BUTTON_WIDTH );
-        playView.setFitWidth( 2 * MIN_BUTTON_WIDTH );
-        play.setGraphic(playView);
-        play.setTooltip(new Tooltip("Play a new game!"));
-
         // create icon for settings button, set its size, add popup tooltip
-        Image imageSettings = new Image(getClass().getResourceAsStream("settings.png"));
-        ImageView settingsView = new ImageView(imageSettings);
-        settingsView.setFitHeight(MIN_BUTTON_WIDTH);
-        settingsView.setFitWidth(MIN_BUTTON_WIDTH);
-        settings.setGraphic(settingsView);
-        settings.setTooltip(new Tooltip("settings"));
+        makeIconButton("images/settings.png", settings, "Settings");
 
+        //Handle event of settings button
         settings.setOnAction(this::handleSettingsAction);
 
         // create icon for help button, set its size, add popup tooltip
-        Image imageHelp = new Image(getClass().getResourceAsStream("help.png"));
-        ImageView helpView = new ImageView(imageHelp);
-        helpView.setFitHeight(MIN_BUTTON_WIDTH);
-        helpView.setFitWidth(MIN_BUTTON_WIDTH);
-        help.setGraphic(helpView);
-        help.setTooltip(new Tooltip("help"));
+        makeIconButton("images/help.png", help, "Help");
 
+        //Handle event of help button
         help.setOnAction(this::handleTutorial);
 
         return buttonPane;
+    }
+
+    private void makeIconButton(String fileName, Button button, String toolTipText) {
+        Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
+        ImageView buttonView = new ImageView(buttonImage);
+
+        if(fileName.equals("images/play.png")){
+            buttonView.setFitHeight( 2 * MIN_BUTTON_WIDTH );
+            buttonView.setFitWidth( 2 * MIN_BUTTON_WIDTH );
+        }
+        else{
+            buttonView.setFitHeight(MIN_BUTTON_WIDTH );
+            buttonView.setFitWidth(MIN_BUTTON_WIDTH );
+        }
+
+        button.setGraphic(buttonView);
+        button.setTooltip(new Tooltip(toolTipText));
     }
 
     private void handleTutorial(ActionEvent event) {
@@ -117,11 +124,13 @@ public class StartDisplay {
         settings.settingStart(newStage, controller);
     }
 
-    private Stage tutorial(){
+    private Stage tutorial() {
         Stage tutorialStage = new Stage();
 
-        Text explanationText = new Text("\nTetris is a tile matching puzzle video game, originally designed by Alexey Pajitnov.");
-        Text objectivesText = new Text("\nThe objective of Tetris is to destroy as many rows of blocks (called tetriminos) as possible without topping out of the screen!");
+        Text explanationText = new Text("\nTetris is a tile matching puzzle video game, " +
+                                             "originally designed by Alexey Pajitnov.");
+        Text objectivesText = new Text("\nThe objective of Tetris is to destroy as many rows of blocks " +
+                                            "(called tetriminos) as possible without topping out of the screen!");
 
         Text directionsHeading = new Text("\n\nDirections:");
         directionsHeading.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -142,15 +151,13 @@ public class StartDisplay {
         return tutorialStage;
     }
 
-    /*
-    * Method for adding text with correct font and padding. Weight and size are specified by user.
-    */
-    private Node addText(Text text, FontWeight fontWeight, int fontSize) {
+    //Adding and formatting title text
+    private Node addTitleText(Text text) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);
         flowPane.setPadding(new Insets(80, 10, 0, 10));
         flowPane.setAlignment(Pos.CENTER);
-        text.setFont(Font.font("Chalkduster", fontWeight, fontSize));
+        text.setFont(Font.font("Chalkduster", FontWeight.BOLD, 60));
         flowPane.getChildren().add(text);
         return flowPane;
     }

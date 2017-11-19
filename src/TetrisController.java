@@ -1,11 +1,15 @@
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+/**
+ * Creates the controller for Tetris. This is an observer of StartDisplay, BoardDisplay, RestartDisplay,
+ * SettingsDisplay, Board, and Tetrimino. BoardDisplay, RestartDisplay, Board, and Tetrimino are also
+ * observers of TetrisController as it contains the main logic behind the game.
+ */
 
 public class TetrisController {
 
@@ -20,7 +24,10 @@ public class TetrisController {
     Tetrimino currTetrimino;
     Tetrimino nextTetrimino;
 
-    TetrisController(Stage primaryStage){
+    /*
+     * Constructor for TetrisController
+     */
+    TetrisController(Stage primaryStage) {
         primary = primaryStage;
         gameSpeed = 1000;
 
@@ -31,6 +38,9 @@ public class TetrisController {
         board = new Board(mainView);
     }
 
+    /*
+     * starting the game using the StartDisplay class's event handlers
+     */
     void startGame() {
         startView.startScene(primary, this);
     }
@@ -43,6 +53,10 @@ public class TetrisController {
         restartView.restartScene(primary, this, startView);
     }
 
+    /*
+     * Starts a round of Tetris. The timer is preset according to the user's preferred game speed.
+     * Detects the end of the game and quits.
+     */
     void startRound() {
         mainView.mainScene(primary, this);
         currTetrimino = new Tetrimino(board);
@@ -80,13 +94,10 @@ public class TetrisController {
         timer.schedule(timerTask, 1000, (long) (gameSpeed / currTetrimino.speed));
     }
 
-    void testingController(){
-        System.out.println("The controller is not null");
-    }
     /*
      * Destroys the full rows in the board and moves un-full rows down the board accordingly
      */
-    private void destroyRows(){
+    private void destroyRows() {
 
         List<Integer> listOfFullRows = board.fullRows();
 
@@ -98,7 +109,6 @@ public class TetrisController {
         if (listOfFullRows.size()>0) {
             mainView.updateScore(10 * listOfFullRows.size());
         }
-//        for(int j = listOfFullRows.size() - 1; j >= 0; j--) {
 
         for(int j : listOfFullRows) {
             mainView.moveRow(j);
@@ -106,14 +116,13 @@ public class TetrisController {
 
     }
 
-    private void moveTetriminoDown(Tetrimino tetrimino){
+    private void moveTetriminoDown(Tetrimino tetrimino) {
         board.removeTetrimino(tetrimino);
-        tetrimino.newTranslateDown();
+        tetrimino.translateDown();
         board.putTetrimino(tetrimino);
     }
 
     private void changeToNextTetrimino() {
-
 
         currTetrimino = nextTetrimino;
         nextTetrimino = new Tetrimino(board);
@@ -124,21 +133,23 @@ public class TetrisController {
     /*
      * Responds to key presses
      */
-    void respondToKey(KeyCode keyPressed){
+    void respondToKey(KeyCode keyPressed) {
         if (currTetrimino != null){
             if (!currTetrimino.landed()) {
                 board.removeTetrimino(currTetrimino);
+
                 if (keyPressed == KeyCode.LEFT) {
-                    currTetrimino.newTranslateLeft();
+                    currTetrimino.translateLeft();
                 } else if (keyPressed == KeyCode.RIGHT) {
-                    currTetrimino.newTranslateRight();
+                    currTetrimino.translateRight();
                 } else if (keyPressed == KeyCode.DOWN) {
-                    currTetrimino.newTranslateDown();
+                    currTetrimino.translateDown();
                 } else if (keyPressed == KeyCode.UP) {
                     currTetrimino.rotate();
                 } else if (keyPressed == KeyCode.SPACE) {
                     currTetrimino.fallToBottom();
                 }
+
                 board.putTetrimino(currTetrimino);
             }
         }

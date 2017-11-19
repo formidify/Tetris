@@ -1,8 +1,5 @@
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
-import javafx.scene.paint.Color;
 public class Board {
     public static final int NUMCOLUMN = 12;
     public static final int NUMROW = 24;
@@ -31,6 +28,9 @@ public class Board {
         }
     }
 
+    /*
+     *
+     */
     void removeTetrimino(Tetrimino tetrimino){
         int[][] position = tetrimino.getPosition();
         for (int[] pos : position) {
@@ -76,8 +76,10 @@ public class Board {
             //reset outOfGrid
             outOfGrid = 0;
         }
+
         List<int[]> tempInsideGridArray = new ArrayList<int[]>();
         int insideGrid = 0;
+
         for (int j = 0; j < position.length; j++){
             if (position[j][0] == -1){
                 rowAboveBoard[0][position[j][1]] = true;

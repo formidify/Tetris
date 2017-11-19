@@ -3,6 +3,12 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Creates the Tetrimino for Tetris. This controls the shape, orientation, and color of the Tetrimino.
+ * This also handles all Tetrimino movements. This is an observer of the Board class as the Tetrimino
+ * uses the Board to calculate position and check if it is in a valid space in the Board.
+ */
+
 public class Tetrimino {
 
     private static String[] shapes = {"Straight", "Square", "L", "J", "Z", "S", "T"};
@@ -16,7 +22,7 @@ public class Tetrimino {
     private Color color;
     Board mainBoard;
     BoardDisplay boardView;
-    boolean landing; // vs falling
+    boolean landing;
 
     Tetrimino(Board board){
         speed = 1;
@@ -62,21 +68,20 @@ public class Tetrimino {
         return tetriminoColor;
     }
 
+    /*
+     * Returns a 2D array detailing the relative position of a Tetrimino
+     * The relative position dictates the shape of the Tetrimino and is used to
+     * calculate the actual position of the Tetrimino in the grid.
+     */
     int[][] getRelativePosition() {
         int[][] relativePosition = new int[4][2];
         switch (shape) {
             case "Straight":
                 switch (orientation) {
-                    case 0:
+                    case 0: case 2:
                         relativePosition = new int[][] {{0,0}, {-1,0}, {1,0}, {2,0}};
                         break;
-                    case 1:
-                        relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {0,2}};
-                        break;
-                    case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,0}, {1,0}, {2,0}};
-                        break;
-                    case 3:
+                    case 1: case 3:
                         relativePosition = new int[][] {{0,0}, {0,-1}, {0,1}, {0,2}};
                         break;
                     default:
@@ -85,16 +90,7 @@ public class Tetrimino {
                 break;
             case "Square":
                 switch (orientation) {
-                    case 0:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
-                        break;
-                    case 1:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
-                        break;
-                    case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
-                        break;
-                    case 3:
+                    case 0: case 1: case 2: case 3:
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,-1}};
                         break;
                     default:
@@ -139,16 +135,10 @@ public class Tetrimino {
                 break;
             case "Z":
                 switch (orientation) {
-                    case 0:
+                    case 0: case 2:
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
                         break;
-                    case 1:
-                        relativePosition = new int[][] {{0,0}, {-1,1}, {0,1}, {1,0}};
-                        break;
-                    case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {-1,0}, {0,1}};
-                        break;
-                    case 3:
+                    case 1: case 3:
                         relativePosition = new int[][] {{0,0}, {-1,1}, {0,1}, {1,0}};
                         break;
                     default:
@@ -157,16 +147,10 @@ public class Tetrimino {
                 break;
             case "S":
                 switch (orientation) {
-                    case 0:
+                    case 0: case 2:
                         relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,-1}};
                         break;
-                    case 1:
-                        relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
-                        break;
-                    case 2:
-                        relativePosition = new int[][] {{0,0}, {-1,1}, {-1,0}, {0,-1}};
-                        break;
-                    case 3:
+                    case 1: case 3:
                         relativePosition = new int[][] {{0,0}, {-1,-1}, {0,-1}, {1,0}};
                         break;
                     default:
@@ -198,15 +182,8 @@ public class Tetrimino {
 
     }
 
-    int[] getCenter(){
-        return center;
-    }
-
-    private void setCenter(int row, int col){
-        center = new int[] {row, col};
-    }
-
     int[][] getPosition(){
+
         return position;
     }
 
@@ -225,7 +202,7 @@ public class Tetrimino {
     /*
      * Shifting to right based on the position
      */
-    void newTranslateRight() {
+    void translateRight() {
         // instantiate a new array for new coordinates responding to right key
         int[][] tempArray = new int[4][2];
         for (int i = 0; i < 4; i++) {
@@ -247,7 +224,7 @@ public class Tetrimino {
     /*
      * Shifting to left based on the position
      */
-    void newTranslateLeft() {
+    void translateLeft() {
         // instantiate a new array for new coordinates responding to left key
         int[][] tempArray = new int[4][2];
         for (int i = 0; i < 4; i++) {
@@ -267,8 +244,10 @@ public class Tetrimino {
         position = tempArray;
     }
 
-    void newTranslateDown() {
-        // instantiate a new array for new coordinates responding to left key
+    /*
+     * Shifting down based on the position
+     */
+    void translateDown() {
         int[][] tempArray = new int[4][2];
         for (int i = 0; i < 4; i++) {
             tempArray[i][0] = position[i][0]+1;
@@ -283,8 +262,40 @@ public class Tetrimino {
         position = tempArray;
     }
 
-    boolean checkValid(int x, int y) {
-        if (x < 0 || x > 23 || y < 0 || y > 11) {
+    /*
+    * rotation works for all tetriminos.
+    */
+    void rotate(){
+        orientation = (orientation + 1) % 4;
+        updatePosition();
+    }
+
+    /*
+     * Updating the position based on the center.
+     * Used after rotation.
+     */
+    private void updatePosition() {
+        int[][] relativePosition = getRelativePosition();
+        for (int i = 0; i < 4; i++){
+            int[] relPos = relativePosition[i];
+            position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
+        }
+    }
+
+    /*
+    * Automatic fall to bottom with space button
+    */
+    void fallToBottom() {
+        while (!landed()) {
+            translateDown();
+        }
+    }
+
+    /*
+     * Checks if the Tetrimino is in a valid space
+     */
+    private boolean checkValid(int x, int y) {
+        if (x < 0 || x > Board.NUMROW - 1 || y < 0 || y > Board.NUMCOLUMN - 1) {
             return false;
         }
         if (mainBoard.board[x][y]) {
@@ -294,57 +305,8 @@ public class Tetrimino {
     }
 
     /*
-     * fixed automatic fall to bottom with space button
-     */
-    void fallToBottom() {
-        while (!landed()) {
-            newTranslateDown();
-        }
-    }
-
-    /*
-     * rotation works for all tetriminos.
-     */
-    void rotate(){
-        orientation = (orientation + 1) % 4;
-        updatePosition();
-    }
-
-    private void updatePosition() {
-        int[][] relativePosition = getRelativePosition();
-        for (int i = 0; i < 4; i++){
-            int[] relPos = relativePosition[i];
-            position[i] = new int[] {center[0] + relPos[0], center[1] + relPos[1]};
-        }
-    }
-
-
-    // Update center after change in x and y
-    void translate(int deltaRow, int deltaCol){
-        // translating horizontally
-        int col = center[1] + deltaCol;
-        // Check whether the tetrimino is moving out of the board
-        // TODO: this over limit the tetrimino depending on where the center is for each tetrimino
-        if (col < 1){
-            col = 1;
-        } else if (col > Board.NUMCOLUMN - 2) {
-            col = Board.NUMCOLUMN - 2;
-        }
-
-        // translating vertically
-        int row = center[0];
-        for (int i = 0; i < deltaRow; i++) {
-            if (!landed()){
-                row++;
-            }
-
-        }
-    }
-
-
-
-    /*
-     * TODO: Fix landing because it doesn't work for most tetriminos
+     * Check if a Tetrimino is is either at the bottom of the grid
+     * or on top of another Tetrimino.
      */
     boolean landed() {
         for (int[] aPosition : position) {

@@ -1,7 +1,3 @@
-/**
- * Created by chens5 on 11/6/17.
- */
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +8,15 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.scene.shape.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
 import javafx.scene.layout.*;
 
 
-import static javafx.scene.paint.Color.*;
+/**
+ * Creates the main gameplay GUI for Tetris. The TetrisController is a observer of this class as it is
+ * passed in as a parameter for mainScene. The event handler for keystrokes passes each key intake
+ * to the TetrisController. This class is also an observer of the TetrisController class since
+ * the TetrisController updates the display every time a key is called and when a row is destroyed.
+ */
 
 public class BoardDisplay {
 
@@ -36,28 +35,23 @@ public class BoardDisplay {
     int currentScore;
 
 
-    public void mainScene(Stage primaryStage, TetrisController tetrisController) {
+    void mainScene(Stage primaryStage, TetrisController tetrisController) {
 
-        //necessary to instantiate all these variables here because otherwise when
-        //restart function is called, the old root and score and never cleared
         root = new BorderPane();
         score = new BorderPane();
         nextTetrimino = new BorderPane();
         gameGrid = new Pane();
         currentScore = 0;
-
         grid = new Rectangle[Board.NUMROW][Board.NUMCOLUMN];
 
 
-
+        //Setting up the border, size, and grid for the gameGrid element
         BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY, BorderWidths.DEFAULT);
         Border gameBorder = new Border(borderStroke);
-
         gameGrid.setMaxSize(BOARD_WIDTH, BOARD_HEIGHT);
         gameGrid.setMinSize(BOARD_WIDTH, BOARD_HEIGHT);
         gameGrid.setBorder(gameBorder);
-
         drawGrid();
 
         HBox title = addTitle();
@@ -72,9 +66,7 @@ public class BoardDisplay {
 
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
-        /*
-         * Updates the tetrisController whenever a key is pressed
-         */
+        //updates TetrisController class whenever a key is pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if((key.getCode()== KeyCode.LEFT) ||
                     (key.getCode() == KeyCode.RIGHT) ||
@@ -91,7 +83,8 @@ public class BoardDisplay {
 
     }
 
-    private void drawGrid(){
+    //draws a grid for the gameGrid pane
+    private void drawGrid() {
 
         for(int i = 0; i < Board.NUMCOLUMN; i++){
             Line colLine = new Line();
@@ -126,13 +119,16 @@ public class BoardDisplay {
     void drawTetrimino(Tetrimino tetrimino){
         int [][] position = tetrimino.getPosition();
         for (int i=0; i < position.length; i++){
+
             int row = position[i][0];
             int col = position[i][1];
             int x = TETRIMINO_DIM * col;
             int y = TETRIMINO_DIM * row;
+
             grid[row][col] = new Rectangle(x, y, TETRIMINO_DIM, TETRIMINO_DIM);
             grid[row][col].setFill(tetrimino.getColor());
-            grid[row][col].setStroke(BLACK);
+            grid[row][col].setStroke(Color.BLACK);
+
             gameGrid.getChildren().add(grid[row][col]);
         }
     }
@@ -250,23 +246,26 @@ public class BoardDisplay {
      * Update the display for next tetrimino
      * @param: a tetrimino object
      */
-    void updateNextTetrimino(Tetrimino tetrimino){
-
+    void updateNextTetrimino(Tetrimino tetrimino) {
         int[][] coord = tetrimino.getRelativePosition();
-        Pane next = (Pane) nextTetrimino.getChildren().get(1);
+
+        //Getting the pane where the next tetrimino is drawn
+        Pane next = (Pane) nextTetrimino.getCenter();
+
         if (!next.getChildren().isEmpty()){
             next.getChildren().clear();
         }
 
-
+        //Drawing the next tetrimino
         for (int i = 0; i < coord.length; i++){            
             int blockSize = (int) NEXTTETRIMINO_DIM / 2;
-
             int x = blockSize * (1 + coord[i][1]);
             int y = blockSize * (1 + coord[i][0]);
+
             Rectangle rec = new Rectangle(x, y, blockSize, blockSize);
             rec.setFill(tetrimino.getColor());
-            rec.setStroke(BLACK);
+            rec.setStroke(Color.BLACK);
+
             next.getChildren().add(rec);
         }
     }
