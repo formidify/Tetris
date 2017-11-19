@@ -98,6 +98,7 @@ public class StartDisplay {
         ((Node)(event.getSource())).getScene().getWindow().hide();
         controller.startRound();
     }
+    
     private void handleSettings(ActionEvent event) {
         Stage newStage = new Stage();
         SettingsDisplay settings = new SettingsDisplay();
