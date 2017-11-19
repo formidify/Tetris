@@ -2,10 +2,8 @@ import java.util.*;
 
 /**
  * Creates a Board class to handle the logic in the underlying grid for Tetris. This is
- * a subject for TetrisController and BoardDisplay. For instance, when the board updates
- * to remove a Tetrimino from the grid, it calls the BoardDisplay to undraw the Tetrimino from the
- * graphical display. In addition, it keeps track of all the Tetriminos in play. Finally,
- * the Tetris Controller observes the Board to keep track of whether or not to end the game.
+ * a subject for TetrisController. The Tetris Controller observes the Board to keep track
+ * of whether or not to end the game and of each Tetrimino in play on the Board.
  */
 
 public class Board {

@@ -78,6 +78,9 @@ public class StartDisplay {
         return buttonPane;
     }
 
+    /*
+     * Make buttons with pictures
+     */
     private void makeIconButton(String fileName, Button button, String toolTipText) {
         Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
         ImageView buttonView = new ImageView(buttonImage);
@@ -109,7 +112,9 @@ public class StartDisplay {
         tutorial().showAndWait();
     }
 
-
+    /*
+     * Adding tutorial pane
+     */
     private Stage tutorial() {
         Stage tutorialStage = new Stage();
 
@@ -138,7 +143,9 @@ public class StartDisplay {
         return tutorialStage;
     }
 
-    //Adding and formatting title text
+    /*
+     * Adding title text
+     */
     private Node addTitleText(Text text) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);
