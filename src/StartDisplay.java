@@ -23,7 +23,6 @@ import javafx.stage.Stage;
  */
 
 public class StartDisplay {
-    private static final double MIN_BUTTON_WIDTH = 30;
     private Text directions = new Text("TETRIS");
 
     private TetrisController controller;
@@ -66,9 +65,12 @@ public class StartDisplay {
         play.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         // create icon for play, settings and help button, set their sizes, add popup tooltips
-        makeIconButton("images/play.png", play, "Play a new game!");
-        makeIconButton("images/settings.png", settings, "Settings");
-        makeIconButton("images/help.png", help, "Help");
+        makeIconButton(new Image(getClass().getResourceAsStream("images/play.png")), play,
+                        "Play a new game!", new int[] {60, 60});
+        makeIconButton(new Image(getClass().getResourceAsStream("images/settings.png")), settings,
+                        "Settings", new int[] {30, 30});
+        makeIconButton(new Image(getClass().getResourceAsStream("images/help.png")), help,
+                        "Help", new int[] {30, 30});
 
         //Handle event of the buttons
         play.setOnAction(this::handlePlay);
@@ -80,20 +82,13 @@ public class StartDisplay {
 
 
     /*
-     * Make buttons with pictures
+     * Make buttons with icons and tooltips
      */
-    private void makeIconButton(String fileName, Button button, String toolTipText) {
-        Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
+    static void makeIconButton(Image icon, Button button, String toolTipText, int[] iconDim) {
+        Image buttonImage = icon;
         ImageView buttonView = new ImageView(buttonImage);
-
-        if(fileName.equals("images/play.png")){
-            buttonView.setFitHeight( 2 * MIN_BUTTON_WIDTH );
-            buttonView.setFitWidth( 2 * MIN_BUTTON_WIDTH );
-        } else{
-            buttonView.setFitHeight(MIN_BUTTON_WIDTH );
-            buttonView.setFitWidth(MIN_BUTTON_WIDTH );
-        }
-
+        buttonView.setFitHeight(iconDim[0]);
+        buttonView.setFitWidth(iconDim[1]);
         button.setGraphic(buttonView);
         button.setTooltip(new Tooltip(toolTipText));
     }
