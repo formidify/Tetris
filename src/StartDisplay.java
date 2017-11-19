@@ -1,5 +1,4 @@
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -23,6 +22,8 @@ import javafx.stage.Stage;
  */
 
 public class StartDisplay {
+    private static final int SCENE_WIDTH = 300;
+    private static final int SCENE_HEIGHT = 600;
     private Text directions = new Text("TETRIS");
 
     private TetrisController controller;
@@ -36,7 +37,7 @@ public class StartDisplay {
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
 
-        Scene scene = new Scene(root, 300, 600);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setTitle("Tetris");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
@@ -117,15 +118,15 @@ public class StartDisplay {
         Text explanationText = new Text("\nTetris is a tile matching puzzle video game, " +
                                              "originally designed by Alexey Pajitnov.");
         Text objectivesText = new Text("\nThe objective of Tetris is to destroy as many rows of blocks " +
-                                            "(called tetriminos) as possible without topping out of the screen!");
+                                            "(called Tetriminos) as possible without topping out of the screen!");
 
         Text directionsHeading = new Text("\n\nDirections:");
         directionsHeading.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
 
-        Text upText = new Text("\nUp: Rotate the tetrimino");
-        Text downText  = new Text("\nDown: Speed up tetrimino");
-        Text rightLeftText = new Text ("\nRight/Left: Move the tetrimino left and right on the screen");
-        Text spaceText = new Text("\nSpace: Teleport tetrimino to the bottom of the screen");
+        Text upText = new Text("\nUp: Rotate the Tetrimino");
+        Text downText  = new Text("\nDown: Speed up Tetrimino");
+        Text rightLeftText = new Text ("\nRight/Left: Move the Tetrimino left and right on the screen");
+        Text spaceText = new Text("\nSpace: Drop the Tetrimino to the bottom of the screen");
         TextFlow textFlow = new TextFlow();
 
         textFlow.setPadding(new Insets(10, 10, 10, 10));

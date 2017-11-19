@@ -20,6 +20,8 @@ import javafx.stage.Stage;
  */
 
 public class SettingsDisplay{
+    private static final int SCENE_WIDTH = 300;
+    private static final int SCENE_HEIGHT = 600;
     private static final int SLOW_SPEED = 800;
     private static final int MED_SPEED = 400;
     private static final int FAST_SPEED = 100;
@@ -35,7 +37,7 @@ public class SettingsDisplay{
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
 
-        Scene scene = new Scene(root, 300, 600);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
         primaryStage.show();

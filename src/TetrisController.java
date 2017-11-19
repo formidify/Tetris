@@ -15,6 +15,7 @@ public class TetrisController {
 
     Stage primary;
     int gameSpeed;
+    int score;
 
     StartDisplay startView;
     BoardDisplay mainView;
@@ -58,6 +59,7 @@ public class TetrisController {
      * Detects the end of the game and quits.
      */
     void startRound() {
+        score = 0;
         mainView.mainScene(primary, this);
         currTetrimino = new Tetrimino(board);
         nextTetrimino = new Tetrimino(board);
@@ -108,7 +110,7 @@ public class TetrisController {
 
         //update board score, defaults to 10 per line for now
         if (listOfFullRows.size()>0) {
-            mainView.updateScore(10 * listOfFullRows.size());
+            score = mainView.updateScore(10 * listOfFullRows.size());
         }
 
         for(int j : listOfFullRows) {

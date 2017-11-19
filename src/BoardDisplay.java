@@ -274,11 +274,13 @@ public class BoardDisplay {
     /*
      * Update the display of the new score
      * @param: new score
+     * @return: new score
      */
-    void updateScore(int newScore){
+    int updateScore(int newScore){
         currentScore += newScore;
         Text change = (Text) score.getChildren().get(1);
         change.setText(Integer.toString(currentScore));
+        return currentScore;
     }
 
 
