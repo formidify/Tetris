@@ -61,6 +61,9 @@ public class SettingsDisplay{
         buttonPane.add(fast, 0, 2,1,1);
         buttonPane.add(ok, 0, 5,1,1);
 
+        // create icons and tooltips for the buttons
+        makeIconButton()
+
         // create icon for the slow mode, add popup tooltip
         slow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         Image imageSlow = new Image(getClass().getResourceAsStream("images/slow.png"));
@@ -122,6 +125,7 @@ public class SettingsDisplay{
 
         return buttonPane;
     }
+
 
     private Node addText(Text text) {
         FlowPane flowPane = new FlowPane();

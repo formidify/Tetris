@@ -78,7 +78,7 @@ public class StartDisplay {
         return buttonPane;
     }
 
-    private void makeIconButton(String fileName, Button button, String toolTipText) {
+    void makeIconButton(String fileName, Button button, String toolTipText, int iconSideLen) {
         Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
         ImageView buttonView = new ImageView(buttonImage);
 
@@ -98,7 +98,7 @@ public class StartDisplay {
         ((Node)(event.getSource())).getScene().getWindow().hide();
         controller.startRound();
     }
-    
+
     private void handleSettings(ActionEvent event) {
         Stage newStage = new Stage();
         SettingsDisplay settings = new SettingsDisplay();

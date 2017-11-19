@@ -2,10 +2,8 @@ import java.util.*;
 
 /**
  * Creates a Board class to handle the logic in the underlying grid for Tetris. This is
- * a subject for TetrisController and BoardDisplay. For instance, when the board updates
- * to remove a Tetrimino from the grid, it calls the BoardDisplay to undraw the Tetrimino from the
- * graphical display. In addition, it keeps track of all the Tetriminos in play. Finally,
- * the Tetris Controller observes the Board to keep track of whether or not to end the game.
+ * a subject for TetrisController. The Tetris Controller observes the Board to keep track
+ * of whether or not to end the game and of each Tetrimino in play on the Board.
  */
 
 public class Board {
@@ -17,9 +15,9 @@ public class Board {
 
 
     Board(){
-         rowAboveBoard = new boolean[1][NUMCOLUMN];
-         board = new boolean[NUMROW][NUMCOLUMN];
-         clearBoard();
+        rowAboveBoard = new boolean[1][NUMCOLUMN];
+        board = new boolean[NUMROW][NUMCOLUMN];
+        clearBoard();
     }
 
     /*
@@ -87,34 +85,34 @@ public class Board {
             //reset outOfGrid
             outOfGrid = 0;
         }
-            //set it to tetrimino's new position
-            tetrimino.position = updateTetriminoOutOfBounds(position);
-        }
+        //set it to tetrimino's new position
+        tetrimino.position = updateTetriminoOutOfBounds(position);
+    }
 
     /*
      * Helper function to update the position of an out-of-bound tetrimino on the board and the row above board
      */
     private int[][] updateTetriminoOutOfBounds(int[][] position){
-            List<int[]> tempInsideGridArray = new ArrayList<int[]>();
-            int insideGrid = 0;
+        List<int[]> tempInsideGridArray = new ArrayList<int[]>();
+        int insideGrid = 0;
 
-            for (int j = 0; j < position.length; j++){
-                if (position[j][0] == -1){
-                    rowAboveBoard[0][position[j][1]] = true;
-                }
-                else if (position[j][0] >= 0){
-                    insideGrid++;
-                    board[position[j][0]][position[j][1]] = true;
-                    int[] arrayElement = new int[] {position[j][0], position[j][1]};
-                    tempInsideGridArray.add(arrayElement);
-                }
+        for (int j = 0; j < position.length; j++){
+            if (position[j][0] == -1){
+                rowAboveBoard[0][position[j][1]] = true;
             }
-            int[][] insideGridArray = new int[insideGrid][2];
-            for (int k = 0; k < insideGrid; k++){
-                insideGridArray[k] = tempInsideGridArray.get(k);
+            else if (position[j][0] >= 0){
+                insideGrid++;
+                board[position[j][0]][position[j][1]] = true;
+                int[] arrayElement = new int[] {position[j][0], position[j][1]};
+                tempInsideGridArray.add(arrayElement);
             }
-            return insideGridArray;
         }
+        int[][] insideGridArray = new int[insideGrid][2];
+        for (int k = 0; k < insideGrid; k++){
+            insideGridArray[k] = tempInsideGridArray.get(k);
+        }
+        return insideGridArray;
+    }
 
     /*
      * Helper function to determine if all the elevated blocks can fit partially into the grid
@@ -131,9 +129,9 @@ public class Board {
     }
 
 
-     /*
-     * Checks if the row is full
-     */
+    /*
+    * Checks if the row is full
+    */
     boolean isRowFull(int row){
         for (int col = 0; col < NUMCOLUMN; col++){
             if (!board[row][col]){
@@ -161,31 +159,40 @@ public class Board {
     }
 
 
-    //clears the board row so we don't run into any errors with checking the validity of a space in the grid
+    /*
+     * Clears the board row so we don't run into any errors with checking the validity of a space in the grid
+     */
     private void clearRow(int rowIndex){
         for(int i = 0; i < board[rowIndex].length; i++) {
             board[rowIndex][i] = false;
         }
     }
 
-    //Move everything above a certain down a row
-    //E.g. if we have row 23 with row 22 above, we move row 22 to 23
+    /*
+     * Move everything above a certain down a row
+     * E.g. if we have row 23 with row 22 above, we move row 22 to 23
+     */
     private void moveRowsDown(int row){
         for (int i = row - 1; i >= 0; i--){
             for(int j = 0; j < NUMCOLUMN; j++){
                 board[i + 1][j] = board[i][j];
             }
         }
-
     }
 
     /*
      * Checks if Tetriminos have exceeded the top of the board
      */
-    boolean reachBoardTop() {
+    boolean reachBoardTop(Tetrimino tetrimino) {
         for (int col = 0; col < NUMCOLUMN; col++){
 
             if (rowAboveBoard[0][col]){
+                clearBoard();
+                return true;
+            }
+
+            //Checks to see if we have filled the board up exactly at row 0
+            if(tetrimino.landed() && board[0][col]){
                 clearBoard();
                 return true;
             }
@@ -193,5 +200,3 @@ public class Board {
         return false;
     }
 }
-
-

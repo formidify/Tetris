@@ -46,7 +46,7 @@ public class TetrisController {
     }
 
     private boolean checkEndGame() {
-        return board.reachBoardTop();
+        return board.reachBoardTop(currTetrimino);
     }
 
     private void endGame(){
