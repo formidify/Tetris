@@ -34,7 +34,7 @@ public class RestartDisplay {
 
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
-        Node directionsPane = addInstruction(new Text("Would you like to start a new game?"););
+        Node directionsPane = addInstruction(new Text("Would you like to start a new game?"));
 
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
@@ -44,7 +44,6 @@ public class RestartDisplay {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     private Node addButtons() {
         GridPane buttonPane = new GridPane();
@@ -58,24 +57,11 @@ public class RestartDisplay {
         buttonPane.add(newGame, 0, 0);
         buttonPane.add(exit, 2, 0);
 
-        // create icon for new game button, add popup tooltip
-        Image imageNewG = new Image(getClass().getResourceAsStream("images/newGame.png"));
-        ImageView newgameView = new ImageView(imageNewG);
-        newgameView.setFitHeight(60);
-        newgameView.setFitWidth(60);
-        newGame.setGraphic(newgameView);
-        newGame.setTooltip(new Tooltip("Start a new game!"));
+        // create icons and tooltips for restart and exit buttons
+        makeIconButton("images/newGame.png", newGame, "Start a new game!");
+        makeIconButton("images/exit.png", exit,"Exit!");
 
-
-        // create icon for exit button, add popup tooltip
-        Image imageExit = new Image(getClass().getResourceAsStream("images/exit.png"));
-        ImageView exitView = new ImageView(imageExit);
-        exitView.setFitHeight(60);
-        exitView.setFitWidth(60);
-        exit.setGraphic(exitView);
-        exit.setTooltip(new Tooltip("Exit!"));
-
-        // by pressing  newGame button,
+        // By pressing newGame button, a new round is initiated and this restart window is closed.
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -85,6 +71,7 @@ public class RestartDisplay {
             }
         });
 
+        // By pressing exit button, the user exits the game.
         exit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -95,6 +82,16 @@ public class RestartDisplay {
         return buttonPane;
     }
 
+    private void makeIconButton(String fileName, Button button, String toolTipText) {
+        Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
+        ImageView buttonView = new ImageView(buttonImage);
+        buttonView.setFitHeight( buttonIconSize );
+        buttonView.setFitWidth( buttonIconSize );
+        button.setGraphic(buttonView);
+        button.setTooltip(new Tooltip(toolTipText));
+    }
+
+    //Adding and formatting the instruction text
     private Node addInstruction(Text text) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);
@@ -104,5 +101,4 @@ public class RestartDisplay {
         flowPane.getChildren().add(text);
         return flowPane;
     }
-
 }
