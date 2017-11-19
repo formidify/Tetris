@@ -161,31 +161,40 @@ public class Board {
     }
 
 
-    //clears the board row so we don't run into any errors with checking the validity of a space in the grid
+    /*
+     * Clears the board row so we don't run into any errors with checking the validity of a space in the grid
+     */
     private void clearRow(int rowIndex){
         for(int i = 0; i < board[rowIndex].length; i++) {
             board[rowIndex][i] = false;
         }
     }
 
-    //Move everything above a certain down a row
-    //E.g. if we have row 23 with row 22 above, we move row 22 to 23
+    /*
+     * Move everything above a certain down a row
+     * E.g. if we have row 23 with row 22 above, we move row 22 to 23
+     */
     private void moveRowsDown(int row){
         for (int i = row - 1; i >= 0; i--){
             for(int j = 0; j < NUMCOLUMN; j++){
                 board[i + 1][j] = board[i][j];
             }
         }
-
     }
 
     /*
      * Checks if Tetriminos have exceeded the top of the board
      */
-    boolean reachBoardTop() {
+    boolean reachBoardTop(Tetrimino tetrimino) {
         for (int col = 0; col < NUMCOLUMN; col++){
 
             if (rowAboveBoard[0][col]){
+                clearBoard();
+                return true;
+            }
+
+            //Checks to see if we have filled the board up exactly at row 0
+            if(tetrimino.landed() && board[0][col]){
                 clearBoard();
                 return true;
             }

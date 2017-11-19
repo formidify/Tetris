@@ -142,7 +142,6 @@ public class TetrisController {
             if (!currTetrimino.landed()) {
                 board.removeTetrimino(currTetrimino);
                 mainView.undrawTetrimino(currTetrimino);
-
                 if (keyPressed == KeyCode.LEFT) {
                     currTetrimino.translateLeft();
                 } else if (keyPressed == KeyCode.RIGHT) {
