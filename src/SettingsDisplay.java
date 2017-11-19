@@ -62,7 +62,7 @@ public class SettingsDisplay{
         buttonPane.add(ok, 0, 5,1,1);
 
         // create icons and tooltips for the buttons
-        makeIconButton()
+        makeIconButton();
 
         // create icon for the slow mode, add popup tooltip
         slow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
