@@ -332,6 +332,7 @@ public class Tetrimino {
         return false;
     }
 
+
     Color getColor() {
         return color;
     }
