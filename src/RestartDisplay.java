@@ -26,7 +26,7 @@ public class RestartDisplay {
 
     private TetrisController controller;
     private StartDisplay newStartDisplay;
-    private double buttonIconSize = 60;
+    private static final int BUTTON_ICON_SIZE = 60;
 
     void restartScene(Stage primaryStage, TetrisController tetrisController, StartDisplay startView) {
         controller = tetrisController;
@@ -85,8 +85,8 @@ public class RestartDisplay {
     private void makeIconButton(String fileName, Button button, String toolTipText) {
         Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
         ImageView buttonView = new ImageView(buttonImage);
-        buttonView.setFitHeight( buttonIconSize );
-        buttonView.setFitWidth( buttonIconSize );
+        buttonView.setFitHeight( BUTTON_ICON_SIZE );
+        buttonView.setFitWidth( BUTTON_ICON_SIZE );
         button.setGraphic(buttonView);
         button.setTooltip(new Tooltip(toolTipText));
     }

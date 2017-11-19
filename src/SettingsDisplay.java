@@ -23,9 +23,11 @@ import javafx.stage.Stage;
 
 
 public class SettingsDisplay{
+    private static final int SLOW_SPEED = 800;
+    private static final int MED_SPEED = 400;
+    private static final int FAST_SPEED = 100;
     private Text directions = new Text("Set your game speed!");
     private TetrisController controller;
-
 
     void settingStart(Stage primaryStage, TetrisController controller) {
         this.controller = controller;
@@ -71,7 +73,7 @@ public class SettingsDisplay{
 
         slow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) { controller.gameSpeed = 800; }
+            public void handle(ActionEvent event) { controller.gameSpeed = SLOW_SPEED; }
         });
 
 
@@ -86,7 +88,7 @@ public class SettingsDisplay{
 
         med.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) { controller.gameSpeed = 500; }
+            public void handle(ActionEvent event) { controller.gameSpeed = MED_SPEED; }
         });
 
         // create icon for the fast mode, add popup tooltip
@@ -100,7 +102,7 @@ public class SettingsDisplay{
 
         fast.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) { controller.gameSpeed = 200; }
+            public void handle(ActionEvent event) { controller.gameSpeed = FAST_SPEED; }
         });
 
         // create icon for ok button, add popup tooltip
