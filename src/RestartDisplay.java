@@ -17,16 +17,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Created by yuq on 11/7/17.
+ * Creates a restart screen GUI for Tetris. The restart screen is a BorderPane that has a node for
+ * an instruction phrase and several buttons as children. This class is called when end of game is
+ * detected, and directs the user to start a new game or exit.
  */
 
-
 public class RestartDisplay {
-    public static final double MIN_BUTTON_WIDTH = 30;
-    private Text directions = new Text("Would you like to start a new game?");
 
     private TetrisController controller;
     private StartDisplay newStartDisplay;
+    private double buttonIconSize = 60;
 
     void restartScene(Stage primaryStage, TetrisController tetrisController, StartDisplay startView) {
         controller = tetrisController;
@@ -34,7 +34,7 @@ public class RestartDisplay {
 
         BorderPane root = new BorderPane();
         Node buttonPane = addButtons();
-        Node directionsPane = addText(directions, FontWeight.NORMAL, 14);
+        Node directionsPane = addInstruction(new Text("Would you like to start a new game?"));
 
         root.setTop(directionsPane);
         root.setCenter(buttonPane);
@@ -45,7 +45,6 @@ public class RestartDisplay {
         primaryStage.show();
     }
 
-
     private Node addButtons() {
         GridPane buttonPane = new GridPane();
         buttonPane.setAlignment(Pos.CENTER);
@@ -55,37 +54,24 @@ public class RestartDisplay {
         // Create restart and exit buttons and add them to the grid
         Button newGame = new Button();
         Button exit = new Button();
-
         buttonPane.add(newGame, 0, 0);
         buttonPane.add(exit, 2, 0);
 
+        // create icons and tooltips for restart and exit buttons
+        makeIconButton("images/newGame.png", newGame, "Start a new game!");
+        makeIconButton("images/exit.png", exit,"Exit!");
+
+        // By pressing newGame button, a new round is initiated and this restart window is closed.
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Stage newStage = new Stage();
                 newStartDisplay.startScene(newStage, controller);
-
                 ((Node)(event.getSource())).getScene().getWindow().hide();
             }
         });
 
-        // create icon for new game button, add popup tooltip
-        Image imageNewG = new Image(getClass().getResourceAsStream("images/newGame.png"));
-        ImageView newgameView = new ImageView(imageNewG);
-        newgameView.setFitHeight(60);
-        newgameView.setFitWidth(60);
-        newGame.setGraphic(newgameView);
-        newGame.setTooltip(new Tooltip("Start a new game!"));
-
-
-        // create icon for exit button, add popup tooltip
-        Image imageExit = new Image(getClass().getResourceAsStream("images/exit.png"));
-        ImageView exitView = new ImageView(imageExit);
-        exitView.setFitHeight(60);
-        exitView.setFitWidth(60);
-        exit.setGraphic(exitView);
-        exit.setTooltip(new Tooltip("Exit!"));
-
+        // By pressing exit button, the user exits the game.
         exit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -96,14 +82,23 @@ public class RestartDisplay {
         return buttonPane;
     }
 
-    private Node addText(Text text, FontWeight fontWeight, int fontSize) {
+    private void makeIconButton(String fileName, Button button, String toolTipText) {
+        Image buttonImage = new Image(getClass().getResourceAsStream(fileName));
+        ImageView buttonView = new ImageView(buttonImage);
+        buttonView.setFitHeight( buttonIconSize );
+        buttonView.setFitWidth( buttonIconSize );
+        button.setGraphic(buttonView);
+        button.setTooltip(new Tooltip(toolTipText));
+    }
+
+    //Adding and formatting the instruction text
+    private Node addInstruction(Text text) {
         FlowPane flowPane = new FlowPane();
         flowPane.setPrefHeight(100);
         flowPane.setPadding(new Insets(80, 10, 0, 10));
         flowPane.setAlignment(Pos.CENTER);
-        text.setFont(Font.font("Chalkduster", fontWeight, fontSize));
+        text.setFont(Font.font("Chalkduster", FontWeight.NORMAL, 14));
         flowPane.getChildren().add(text);
         return flowPane;
     }
-
 }
