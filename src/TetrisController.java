@@ -99,7 +99,7 @@ public class TetrisController {
      */
     private void destroyRows() {
 
-        List<Integer> listOfFullRows = board.fullRows();
+        List<Integer> listOfFullRows = board.manageFullRows();
 
         for(int i = 0; i < listOfFullRows.size(); i++) {
             mainView.clearLine(listOfFullRows.get(i));

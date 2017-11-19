@@ -1,5 +1,13 @@
 import java.util.*;
 
+/**
+ * Creates a Board class to handle the logic in the underlying grid for Tetris. This is
+ * a subject for TetrisController and BoardDisplay. For instance, when the board updates
+ * to remove a Tetrimino from the grid, it calls the BoardDisplay to undraw the Tetrimino from the
+ * graphical display. In addition, it keeps track of all the Tetriminos in play. Finally,
+ * the Tetris Controller observes the Board to keep track of whether or not to end the game.
+ */
+
 public class Board {
     public static final int NUMCOLUMN = 12;
     public static final int NUMROW = 24;
@@ -29,7 +37,9 @@ public class Board {
     }
 
     /*
-     *
+     * Switches the places the Tetrimino previously occupied to false so
+     * it removes the Tetrimino from the underlying Board grid and undraws it
+     * from the BoardDisplay
      */
     void removeTetrimino(Tetrimino tetrimino){
         int[][] position = tetrimino.getPosition();
@@ -39,9 +49,13 @@ public class Board {
         boardView.undrawTetrimino(tetrimino);
     }
 
-
+    /*
+     * Puts a tetrimino in the Board grid and draws it in the
+     * BoardDisplay.
+     */
     void putTetrimino(Tetrimino tetrimino) {
         int[][] position = tetrimino.getPosition();
+
         //just to check if one of the coordinates are invalid
         for (int[] pos : position) {
             if (board[pos[0]][pos[1]]){
@@ -50,9 +64,11 @@ public class Board {
                 return;
             }
         }
+
         for (int[] pos : position) {
             board[pos[0]][pos[1]] = true;
         }
+
         boardView.drawTetrimino(tetrimino);
     }
 
@@ -62,47 +78,53 @@ public class Board {
     private void placeTetriminoOutOfBounds(Tetrimino tetrimino){
         int[][] position = tetrimino.getPosition();
         int outOfGrid = 0;
-        while (!canFit(position)){
-            for (int i = 0; i < position.length; i++){
+        while (!canFitIntoGrid(position)) {
+            for (int i = 0; i < position.length; i++) {
                 position[i][0]--;
-                if (position[i][0] < 0){
+                if (position[i][0] < 0) {
                     outOfGrid++;
                 }
             }
             //if all four are out of the grid, no need to elevate any more, just quit the while loop
-            if (outOfGrid == position.length){
+            if (outOfGrid == position.length) {
                 break;
             }
             //reset outOfGrid
             outOfGrid = 0;
         }
-
-        List<int[]> tempInsideGridArray = new ArrayList<int[]>();
-        int insideGrid = 0;
-
-        for (int j = 0; j < position.length; j++){
-            if (position[j][0] == -1){
-                rowAboveBoard[0][position[j][1]] = true;
-            }
-            else if (position[j][0] >= 0){
-                insideGrid++;
-                board[position[j][0]][position[j][1]] = true;
-                int[] arrayElement = new int[] {position[j][0], position[j][1]};
-                tempInsideGridArray.add(arrayElement);
-            }
+            //set it to tetrimino's new position
+            tetrimino.position = updateTetriminoOutOfBounds(position);
         }
-        int[][] insideGridArray = new int[insideGrid][2];
-        for (int k = 0; k < insideGrid; k++){
-            insideGridArray[k] = tempInsideGridArray.get(k);
+
+    /*
+     * Helper function to update the position of an out-of-bound tetrimino on the board and the row above board
+     */
+    private int[][] updateTetriminoOutOfBounds(int[][] position){
+            List<int[]> tempInsideGridArray = new ArrayList<int[]>();
+            int insideGrid = 0;
+
+            for (int j = 0; j < position.length; j++){
+                if (position[j][0] == -1){
+                    rowAboveBoard[0][position[j][1]] = true;
+                }
+                else if (position[j][0] >= 0){
+                    insideGrid++;
+                    board[position[j][0]][position[j][1]] = true;
+                    int[] arrayElement = new int[] {position[j][0], position[j][1]};
+                    tempInsideGridArray.add(arrayElement);
+                }
+            }
+            int[][] insideGridArray = new int[insideGrid][2];
+            for (int k = 0; k < insideGrid; k++){
+                insideGridArray[k] = tempInsideGridArray.get(k);
+            }
+            return insideGridArray;
         }
-        //set it to tetrimino's new position
-        tetrimino.position = insideGridArray;
-    }
 
     /*
      * Helper function to determine if all the elevated blocks can fit partially into the grid
      */
-    private boolean canFit(int[][] pos) {
+    private boolean canFitIntoGrid(int[][] pos) {
         for (int i = 0; i < pos.length; i++) {
             if (pos[i][0] >= 0) {
                 if (board[pos[i][0]][pos[i][1]]) {
@@ -117,7 +139,7 @@ public class Board {
      /*
      * Checks if the row is full
      */
-    boolean rowIsFull(int row){
+    boolean isRowFull(int row){
         for (int col = 0; col < NUMCOLUMN; col++){
             if (!board[row][col]){
                 return false;
@@ -129,12 +151,12 @@ public class Board {
     /*
      * returns a list of full rows, clears each row, and moves each board row down
      */
-    List<Integer> fullRows(){
+    List<Integer> manageFullRows(){
         List<Integer> listOfFullRows = new ArrayList<Integer>();
 
         for (int row = 0; row < NUMROW; row++){
 
-            if (rowIsFull(row)){
+            if (isRowFull(row)){
                 listOfFullRows.add(row);
                 clearRow(row);
                 moveRowsDown(row);
@@ -162,8 +184,10 @@ public class Board {
 
     }
 
+    /*
+     * Checks if Tetriminos have exceeded the top of the board
+     */
     boolean reachBoardTop() {
-        // TODO: wrong algorithm, should return true only when the tetris exceed the top
         for (int col = 0; col < NUMCOLUMN; col++){
 
             if (rowAboveBoard[0][col]){
@@ -173,19 +197,6 @@ public class Board {
         }
         return false;
     }
-    /*
-    //Do we really need this?
->>>>>>> 46fd1c4c2735396b3a7b8ab9d8d8a1ad0455ac97
-    class Square{
-
-        boolean isEmpty;
-        Color color;
-
-        Square(){
-            isEmpty = true;
-            color = Color.WHITE;
-        }
-    }*/
 }
 
 
