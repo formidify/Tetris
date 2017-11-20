@@ -1,6 +1,6 @@
-final-project-final-project-c created by GitHub Classroom
+Tetris
 
-Sam Chen, Weijia Ma, James Yang, Qimeng Yu
+By: Sam Chen, Weijia Ma, James Yang, Qimeng Yu
 
 This is the game of Tetris. Tetris is a tile-matching puzzle game originally designed by Alexey Pajitnov. In Tetris, several types of blocks, called Tetriminos, fall from the top of the screen and the user tries to fill an entire row of Tetriminos. The objective of the game is to fill and clear as many rows as possible before the Tetriminos fill up the screen. Note that hover text  are present for each button in the starting screen and the ending screen but they take a few seconds to appear. 
 
