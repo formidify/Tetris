@@ -81,7 +81,7 @@ public class RestartDisplay {
 
         return buttonPane;
     }
-    
+
     private TextFlow addScore(int score) {
         TextFlow textFlow = new TextFlow();
         textFlow.setPrefHeight(100);

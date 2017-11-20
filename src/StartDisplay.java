@@ -25,7 +25,6 @@ public class StartDisplay {
     private static final int SCENE_WIDTH = 300;
     private static final int SCENE_HEIGHT = 600;
     private Text directions = new Text("TETRIS");
-
     private TetrisController controller;
 
     void startScene(Stage primaryStage, TetrisController tetrisController) {
